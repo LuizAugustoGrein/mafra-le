@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreenPage from './src/screens/SplashScreenPage';
 import HomePage from './src/screens/HomePage';
 import EnterFormPage from './src/screens/EnterFormPage';
+import AvatarPage from './src/screens/AvatarPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ export default function App() {
           <Stack.Screen name={"SplashScreenPage"} component={SplashScreenPage} />
           <Stack.Screen name={"HomePage"} component={HomePage} />
           <Stack.Screen name={"EnterFormPage"} component={EnterFormPage} />
+          <Stack.Screen name={"AvatarPage"} component={AvatarPage} />
         </Stack.Navigator>
       </AuthProvider>
     </NavigationContainer>

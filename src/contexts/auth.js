@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import * as ScreenOrientation from "expo-screen-orientation";
 
 export const AuthContext = createContext();
 
@@ -57,6 +58,11 @@ function AuthProvider({children}) {
     };
 
     async function verifyLogin (email = null, name = null) {
+
+        // await ScreenOrientation.lockAsync(
+        //     ScreenOrientation.OrientationLock.LANDSCAPE
+        // );
+
         setTimeout(() => {
             navigation.navigate('HomePage')
         }, 1000)

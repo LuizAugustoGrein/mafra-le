@@ -1,17 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, React } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, TouchableOpacity } from 'react-native';
+import { useCallback } from 'react';
 import CustomButton from '../components/CustomButton';
 import WelcomeDescription from '../components/WelcomeDescription';
 import LogoImage from '../components/LogoImage';
 import { CustomTextInput } from '../components/CustomTextInput';
+import * as ScreenOrientation from "expo-screen-orientation";
 
 import { useNavigation } from '@react-navigation/native';
+
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function EnterFormPage () {
 
   const navigation = useNavigation();
+
+  async function lockOrientation () {
+    await ScreenOrientation.lockAsync(
+      ScreenOrientation.OrientationLock.DEFAULT
+    );
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      lockOrientation();
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -30,7 +46,7 @@ export default function EnterFormPage () {
           <CustomTextInput placeholder={'Ex: 12345'} upperText="Nº da matrícula:"></CustomTextInput>
           <CustomTextInput placeholder={'Escolha uma opção'} upperText="Série:"></CustomTextInput>
 
-          <CustomButton text="Confirmar"></CustomButton>
+          <CustomButton text="Confirmar" action={() => { navigation.navigate('AvatarPage'); }}></CustomButton>
         </View>
       </LinearGradient>
     </View>

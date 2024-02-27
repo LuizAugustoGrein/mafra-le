@@ -2,15 +2,30 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, TouchableOpacity } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 import CustomButton from '../components/CustomButton';
 import WelcomeDescription from '../components/WelcomeDescription';
 import LogoImage from '../components/LogoImage';
+import * as ScreenOrientation from "expo-screen-orientation";
 
 import { useNavigation } from '@react-navigation/native';
 
 export default function HomePage () {
 
   const navigation = useNavigation();
+
+  async function lockOrientation () {
+    await ScreenOrientation.lockAsync(
+      ScreenOrientation.OrientationLock.DEFAULT
+    );
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      lockOrientation();
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
