@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView, React } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, TouchableOpacity } from 'react-native';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import CustomButton from '../components/CustomButton';
 import WelcomeDescription from '../components/WelcomeDescription';
 import LogoImage from '../components/LogoImage';
@@ -13,7 +13,11 @@ import { useNavigation } from '@react-navigation/native';
 
 import { useFocusEffect } from '@react-navigation/native';
 
+import SkinColor from '../avatar/SkinColor';
+
 export default function AvatarPage () {
+
+  const [skinColor, setSkinColor] = useState(3);
 
   const navigation = useNavigation();
 
@@ -44,11 +48,11 @@ export default function AvatarPage () {
             </View>
             <ScrollView style={styles.choseOptionScroll}>
                 <View style={styles.choseOptionContent}>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FFE1B6' }]}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#EBC896' }]}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FDC473' }]}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#9D835E' }]}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#442B22' }]}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FFE1B6' }]} onPress={() => setSkinColor(1)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#EBC896' }]} onPress={() => setSkinColor(2)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FDC473' }]} onPress={() => setSkinColor(3)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#9D835E' }]} onPress={() => setSkinColor(4)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#442B22' }]} onPress={() => setSkinColor(5)}></TouchableOpacity>
                 </View>
             </ScrollView>
             <TouchableOpacity style={[styles.confirmButton]}>
@@ -56,11 +60,7 @@ export default function AvatarPage () {
             </TouchableOpacity>
         </View>
         <View style={styles.previewSection}>
-            <Image
-                // source={require('../../assets/preview-avatar.png')}
-                source={require('../../assets/avatar.png')}
-                style={styles.avatarPreview}
-            />
+          <SkinColor skinOption={skinColor}></SkinColor>
         </View>
       </LinearGradient>
     </View>
