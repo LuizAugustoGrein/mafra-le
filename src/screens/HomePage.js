@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Image, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 import CustomButton from '../components/CustomButton';
@@ -28,7 +28,7 @@ export default function HomePage () {
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <LinearGradient
         colors={['rgba(142,29,27,1)', 'rgba(59,34,38,1)', 'rgba(59,34,38,1)', 'rgba(142,29,27,1)']}
         style={styles.main}
@@ -53,7 +53,7 @@ export default function HomePage () {
 
         <CustomButton text="Estou Pronto!" action={() => { navigation.navigate('EnterFormPage'); }}></CustomButton>
       </LinearGradient>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     },
     main: {
       flex: 1,
-      paddingTop: 80
+      paddingTop: 80,
+      paddingBottom: 80
     }
 });

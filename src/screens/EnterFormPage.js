@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, React } from 'react-native';
+import { StyleSheet, Text, View, React, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, TouchableOpacity } from 'react-native';
 import { useCallback } from 'react';
@@ -30,7 +30,7 @@ export default function EnterFormPage () {
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <LinearGradient
         colors={['rgba(142,29,27,1)', 'rgba(59,34,38,1)', 'rgba(59,34,38,1)', 'rgba(142,29,27,1)']}
         style={styles.main}
@@ -43,13 +43,13 @@ export default function EnterFormPage () {
         <WelcomeDescription text="Ele será utilizado para salvar seu progresso durante toda a nossa jornada."></WelcomeDescription>
 
         <View style={{marginTop: 30, marginHorizontal: '10%'}}>
-          <CustomTextInput placeholder={'Ex: 12345'} upperText="Nº da matrícula:"></CustomTextInput>
+          <CustomTextInput placeholder={'Ex: 12345678'} upperText="Nº da matrícula:"></CustomTextInput>
           <CustomTextInput placeholder={'Escolha uma opção'} upperText="Série:"></CustomTextInput>
 
           <CustomButton text="Confirmar" action={() => { navigation.navigate('AvatarPage'); }}></CustomButton>
         </View>
       </LinearGradient>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     },
     main: {
       flex: 1,
-      paddingTop: 80
+      paddingTop: 80,
+      paddingBottom: 80
     }
 });

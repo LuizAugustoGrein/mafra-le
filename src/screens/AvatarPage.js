@@ -14,10 +14,16 @@ import { useNavigation } from '@react-navigation/native';
 import { useFocusEffect } from '@react-navigation/native';
 
 import SkinColor from '../avatar/SkinColor';
+import Hair from '../avatar/Hair';
+import Ponytail1 from '../../assets/avatar/hair/ponytail/Ponytail1';
 
 export default function AvatarPage () {
 
   const [skinColor, setSkinColor] = useState(3);
+  const [eyeColor, setEyeColor] = useState(10);
+  const [hairColor, setHairColor] = useState(0);
+
+  const [step, setStep] = useState(1);
 
   const navigation = useNavigation();
 
@@ -43,24 +49,83 @@ export default function AvatarPage () {
       >
         <View style={styles.optionsSection}>
             <WelcomeDescription text="Já começaremos a nossa grande aventura, mas primeiro, como você se parece?"></WelcomeDescription>
-            <View style={styles.choseOptionTitle}>
-                <Text style={styles.choseOptionTitleText}>Tom de pele</Text>
-            </View>
-            <ScrollView style={styles.choseOptionScroll}>
-                <View style={styles.choseOptionContent}>
+            {step == 1 &&
+              <>
+                <View style={styles.choseOptionTitle}>
+                  <Text style={styles.choseOptionTitleText}>Tom de pele</Text>
+                </View>
+                <ScrollView style={styles.choseOptionScroll}>
+                  <View style={styles.choseOptionContent}>
                     <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FFE1B6' }]} onPress={() => setSkinColor(1)}></TouchableOpacity>
                     <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#EBC896' }]} onPress={() => setSkinColor(2)}></TouchableOpacity>
                     <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FDC473' }]} onPress={() => setSkinColor(3)}></TouchableOpacity>
                     <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#9D835E' }]} onPress={() => setSkinColor(4)}></TouchableOpacity>
                     <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#442B22' }]} onPress={() => setSkinColor(5)}></TouchableOpacity>
+                  </View>
+                </ScrollView>
+              </>
+            }
+            {step == 2 &&
+              <>
+                <View style={styles.choseOptionTitle}>
+                  <Text style={styles.choseOptionTitleText}>Cor dos olhos</Text>
                 </View>
-            </ScrollView>
-            <TouchableOpacity style={[styles.confirmButton]}>
+                <ScrollView style={styles.choseOptionScroll}>
+                  <View style={styles.choseOptionContent}>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#663300' }]} onPress={() => setEyeColor(1)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#0000FF' }]} onPress={() => setEyeColor(2)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#008000' }]} onPress={() => setEyeColor(3)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#808080' }]} onPress={() => setEyeColor(4)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FFBF00' }]} onPress={() => setEyeColor(5)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#D4AF37' }]} onPress={() => setEyeColor(6)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#996633' }]} onPress={() => setEyeColor(7)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#8A2BE2' }]} onPress={() => setEyeColor(8)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FF0000' }]} onPress={() => setEyeColor(9)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#000000' }]} onPress={() => setEyeColor(10)}></TouchableOpacity>
+                  </View>
+                </ScrollView>
+              </>
+            }
+            {step == 3 &&
+              <>
+                <View style={styles.choseOptionTitle}>
+                  <Text style={styles.choseOptionTitleText}>Tipo de cabelo</Text>
+                </View>
+                <ScrollView style={styles.choseOptionScroll}>
+                  <View style={styles.choseOptionContent}>
+                    
+                  </View>
+                </ScrollView>
+              </>
+            }
+            {step == 4 &&
+              <>
+                <View style={styles.choseOptionTitle}>
+                  <Text style={styles.choseOptionTitleText}>Cor do cabelo</Text>
+                </View>
+                <ScrollView style={styles.choseOptionScroll}>
+                  <View style={styles.choseOptionContent}>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#663300' }]} onPress={() => setHairColor(1)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#0000FF' }]} onPress={() => setHairColor(2)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#008000' }]} onPress={() => setHairColor(3)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#808080' }]} onPress={() => setHairColor(4)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FFBF00' }]} onPress={() => setHairColor(5)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#D4AF37' }]} onPress={() => setHairColor(6)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#996633' }]} onPress={() => setHairColor(7)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#8A2BE2' }]} onPress={() => setHairColor(8)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FF0000' }]} onPress={() => setHairColor(9)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#000000' }]} onPress={() => setHairColor(10)}></TouchableOpacity>
+                  </View>
+                </ScrollView>
+              </>
+            }
+            <TouchableOpacity style={[styles.confirmButton]} onPress={() => { setStep(step + 1); }}>
                 <Text style={styles.confirmButtonText}>Continuar</Text>
             </TouchableOpacity>
         </View>
         <View style={styles.previewSection}>
           <SkinColor skinOption={skinColor}></SkinColor>
+          <Hair hairColor={hairColor}></Hair>
         </View>
       </LinearGradient>
     </View>
