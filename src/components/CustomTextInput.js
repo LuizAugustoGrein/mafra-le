@@ -14,7 +14,8 @@ export function CustomTextInput({
     setState,
     setCorrect = () => {},
     maxLength = null,
-    upperText
+    upperText,
+    keyboardType = 'default'
 }) {
 
     function handleCorrectState () {
@@ -40,6 +41,7 @@ export function CustomTextInput({
                     placeholderTextColor="black"
                     value={state}
                     maxLength={maxLength}
+                    keyboardType={keyboardType}
                     onChangeText={(text) => setState(text)}
                 />
             </View>

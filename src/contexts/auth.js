@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import * as ScreenOrientation from "expo-screen-orientation";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AuthContext = createContext();
 
@@ -8,85 +8,36 @@ function AuthProvider({children}) {
 
     const navigation = useNavigation();
 
-    const [loginProvider, setLoginProvider] = useState();
-    const [idToken, setIdToken] = useState();
-    const [accessToken, setAccessToken] = useState();
-
     const [user, setUser] = useState();
-
-    const [error, setError] = useState(null);
-
-    async function verifyDefaultLogin (email, name) {
-        if (await auth().currentUser) {
-            var currentUser = await auth().currentUser;
-            email = currentUser.email;
-            var body = {
-                email: email,
-                name: name
-            };
-
-            fetch('https://luizgrein.com/talkee/users/login', {
-                method: 'POST',
-                body: JSON.stringify(body),
-            })
-            .then(async (response) => {
-                if (response.ok) {
-                    var resp = await response.json();
-                    if (!resp.error) {
-                        setUser(resp);
-                        setAccessToken(resp['access_token']);
-                        if (resp['score'] == 0) {
-                            navigation.navigate('LoggedPage', { screen: 'SelfEvaluation' });
-                        } else {
-                            navigation.navigate('LoggedPage', { screen: 'HomePage' });
-                        }
-                    } else {
-                        signOut();
-                        if (resp.error_code == 1101) {
-                            setError(t("error-1101"));
-                        }
-                        navigation.navigate('Login');
-                    }
-                } else {
-                    signOut();
-                    navigation.navigate('Login');
-                }
-            })
+         
+    async function verifyLogin (registrationNumber = null, schoolClass = null) {
+        await AsyncStorage.setItem('registrationNumber', '');
+        await AsyncStorage.setItem('schoolClass', '');
+        if (registrationNumber && schoolClass) {
+            // login pelo form
+            await AsyncStorage.setItem('registrationNumber', registrationNumber);
+            await AsyncStorage.setItem('schoolClass', schoolClass.toString());
+            navigation.navigate('AvatarPage');
         } else {
-            navigation.navigate('Login');
+            const storageRegistrationNumber = await AsyncStorage.getItem('registrationNumber');
+            const storageSchoolClass = await AsyncStorage.getItem('schoolClass');
+            if (storageRegistrationNumber && storageSchoolClass) {
+                navigation.navigate('AvatarPage');
+            } else {
+                navigation.navigate('HomePage');
+            }
         }
-    };
-
-    async function verifyLogin (email = null, name = null) {
-
-        // await ScreenOrientation.lockAsync(
-        //     ScreenOrientation.OrientationLock.LANDSCAPE
-        // );
-
-        setTimeout(() => {
-            navigation.navigate('HomePage')
-        }, 1000)
     }
 
     async function signOut () {
-        try {
-            setUser(null);
-            setLoginProvider(null);
-            await GoogleSignin.signOut();
-            auth().signOut();
-            navigation.navigate('Login');
-        } catch (error) {
-            console.error(error);
-        }
+       
     };
 
     return (
         <AuthContext.Provider value={{
             verifyLogin,
             signOut, 
-            user, setUser,
-            accessToken,
-            error, setError
+            user, setUser
         }}>
             {children}
         </AuthContext.Provider>

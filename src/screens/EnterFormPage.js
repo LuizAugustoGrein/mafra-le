@@ -1,17 +1,24 @@
-import { StyleSheet, View, React, ScrollView } from 'react-native';
+import { StyleSheet, View, React, ScrollView, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useContext } from 'react';
 import CustomButton from '../components/CustomButton';
 import WelcomeDescription from '../components/WelcomeDescription';
 import LogoImage from '../components/LogoImage';
 import { CustomTextInput } from '../components/CustomTextInput';
 import * as ScreenOrientation from "expo-screen-orientation";
+import SelectDropdown from 'react-native-select-dropdown';
 
 import { useNavigation } from '@react-navigation/native';
 
 import { useFocusEffect } from '@react-navigation/native';
 
+const selectOptions = ["Escolha uma opção", "1° Ano", "2° Ano", "3° Ano", "4° Ano", "5° Ano", "6° Ano", "7° Ano", "8° Ano", "9° Ano"];
+
+import { AuthContext } from '../contexts/auth';
+
 export default function EnterFormPage () {
+
+  const { verifyLogin } = useContext(AuthContext);
 
   const [registrationNumber, setRegistrationNumber] = useState();
   const [schoolClass, setSchoolClass] = useState();
@@ -26,6 +33,10 @@ export default function EnterFormPage () {
     );
   }
 
+  async function login () {
+    verifyLogin(registrationNumber, schoolClass);
+  }
+
   useFocusEffect(
     useCallback(() => {
       lockOrientation();
@@ -33,7 +44,7 @@ export default function EnterFormPage () {
   );
 
   useEffect(() => {
-    if (registrationNumber.length == 8 && schoolClass) {
+    if (registrationNumber && registrationNumber.length == 8 && schoolClass) {
       setIsFormOK(true);
     } else {
       setIsFormOK(false);
@@ -54,10 +65,34 @@ export default function EnterFormPage () {
         <WelcomeDescription text="Ele será utilizado para salvar seu progresso durante toda a nossa jornada."></WelcomeDescription>
 
         <View style={{marginTop: 30, marginHorizontal: '10%'}}>
-          <CustomTextInput placeholder={'Ex: 12345678'} upperText="Nº da matrícula:" state={registrationNumber} setState={setRegistrationNumber} maxLength={8}></CustomTextInput>
-          <CustomTextInput placeholder={'Escolha uma opção'} upperText="Série:" state={schoolClass} setState={setSchoolClass}></CustomTextInput>
+          <CustomTextInput placeholder={'Ex: 12345678'} upperText="Nº da matrícula:" state={registrationNumber} setState={setRegistrationNumber} maxLength={8} keyboardType={'numeric'}></CustomTextInput>
 
-          <CustomButton text="Confirmar" action={() => { navigation.navigate('AvatarPage'); }} disabled={!isFormOK}></CustomButton>
+          <Text style={styles.upperText}>Série:</Text>
+          <SelectDropdown
+            data={selectOptions}
+            defaultValueByIndex={0}
+            disabledIndexs={[0]}
+            buttonStyle={{
+              width: 'calc(100% - 16)',
+              margin: 8,
+              borderRadius: 10,
+              margin: 8,
+              alignItems: "center",
+              borderColor: "black",
+              borderWidth: 1
+            }}
+            onSelect={(selectedItem, index) => {
+              setSchoolClass(index);
+            }}
+            buttonTextAfterSelection={(selectedItem, index) => {
+              return selectedItem
+            }}
+            rowTextForSelection={(item, index) => {
+              return item;
+            }}
+          />
+
+          <CustomButton text="Confirmar" action={() => login()} disabled={!isFormOK}></CustomButton>
         </View>
       </LinearGradient>
     </ScrollView>
@@ -98,5 +133,11 @@ const styles = StyleSheet.create({
       flex: 1,
       paddingTop: 80,
       paddingBottom: 80
-    }
+    },
+    upperText: {
+      color: 'white',
+      alignSelf: 'center',
+      fontSize: 20,
+      marginTop: 20
+  }
 });
