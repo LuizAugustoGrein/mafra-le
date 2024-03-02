@@ -15,7 +15,6 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import SkinColor from '../avatar/SkinColor';
 import Hair from '../avatar/Hair';
-import Ponytail1 from '../../assets/avatar/hair/ponytail/Ponytail1';
 
 export default function AvatarPage () {
 

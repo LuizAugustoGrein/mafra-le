@@ -12,28 +12,22 @@ export function CustomTextInput({
     placeholder, 
     state, 
     setState,
-    setCorrect = () => {}, 
-    secureTextEntry = false,
+    setCorrect = () => {},
+    maxLength = null,
     upperText
 }) {
 
-    // const [showPassword, setShowPassword] = useState(false);
+    function handleCorrectState () {
+        if (!state) {
+            setCorrect(false);
+        } else {
+            setCorrect(true);
+        }
+    }
 
-    // function handleCorrectState () {
-    //     if (!state) {
-    //         setCorrect(false);
-    //     } else {
-    //         setCorrect(true);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     handleCorrectState();
-    // }, [state])
-
-    // const toggleShowPassword = () => {
-    //     setShowPassword((prevShowPassword) => !prevShowPassword);
-    // };
+    useEffect(() => {
+        handleCorrectState();
+    }, [state])
 
     return (
         <>
@@ -45,8 +39,8 @@ export function CustomTextInput({
                     placeholder={placeholder}
                     placeholderTextColor="black"
                     value={state}
-                    // onChangeText={(text) => setState(text)}
-                    secureTextEntry={(secureTextEntry && !showPassword)}
+                    maxLength={maxLength}
+                    onChangeText={(text) => setState(text)}
                 />
             </View>
         </>

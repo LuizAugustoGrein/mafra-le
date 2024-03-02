@@ -1,8 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, React, ScrollView } from 'react-native';
+import { StyleSheet, View, React, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Image, TouchableOpacity } from 'react-native';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import CustomButton from '../components/CustomButton';
 import WelcomeDescription from '../components/WelcomeDescription';
 import LogoImage from '../components/LogoImage';
@@ -14,6 +12,11 @@ import { useNavigation } from '@react-navigation/native';
 import { useFocusEffect } from '@react-navigation/native';
 
 export default function EnterFormPage () {
+
+  const [registrationNumber, setRegistrationNumber] = useState();
+  const [schoolClass, setSchoolClass] = useState();
+
+  const [isFormOK, setIsFormOK] = useState(false);
 
   const navigation = useNavigation();
 
@@ -29,6 +32,14 @@ export default function EnterFormPage () {
     }, [])
   );
 
+  useEffect(() => {
+    if (registrationNumber.length == 8 && schoolClass) {
+      setIsFormOK(true);
+    } else {
+      setIsFormOK(false);
+    }
+  }, [registrationNumber, schoolClass]);
+
   return (
     <ScrollView style={styles.container}>
       <LinearGradient
@@ -43,10 +54,10 @@ export default function EnterFormPage () {
         <WelcomeDescription text="Ele será utilizado para salvar seu progresso durante toda a nossa jornada."></WelcomeDescription>
 
         <View style={{marginTop: 30, marginHorizontal: '10%'}}>
-          <CustomTextInput placeholder={'Ex: 12345678'} upperText="Nº da matrícula:"></CustomTextInput>
-          <CustomTextInput placeholder={'Escolha uma opção'} upperText="Série:"></CustomTextInput>
+          <CustomTextInput placeholder={'Ex: 12345678'} upperText="Nº da matrícula:" state={registrationNumber} setState={setRegistrationNumber} maxLength={8}></CustomTextInput>
+          <CustomTextInput placeholder={'Escolha uma opção'} upperText="Série:" state={schoolClass} setState={setSchoolClass}></CustomTextInput>
 
-          <CustomButton text="Confirmar" action={() => { navigation.navigate('AvatarPage'); }}></CustomButton>
+          <CustomButton text="Confirmar" action={() => { navigation.navigate('AvatarPage'); }} disabled={!isFormOK}></CustomButton>
         </View>
       </LinearGradient>
     </ScrollView>
