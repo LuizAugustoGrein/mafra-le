@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 export const AuthContext = createContext();
 
@@ -11,20 +12,80 @@ function AuthProvider({children}) {
     const [user, setUser] = useState();
          
     async function verifyLogin (registrationNumber = null, schoolClass = null) {
-        await AsyncStorage.setItem('registrationNumber', '');
-        await AsyncStorage.setItem('schoolClass', '');
+        // await AsyncStorage.setItem('registrationNumber', '');
+        // await AsyncStorage.setItem('schoolClass', '');
         if (registrationNumber && schoolClass) {
-            // login pelo form
-            await AsyncStorage.setItem('registrationNumber', registrationNumber);
-            await AsyncStorage.setItem('schoolClass', schoolClass.toString());
-            navigation.navigate('AvatarPage');
+            const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/users/login', {
+                registration_number: registrationNumber,
+                class: schoolClass
+            });
+            if (response.data.success) {
+                setUser(response.data.user);
+                await AsyncStorage.setItem('registrationNumber', registrationNumber);
+                await AsyncStorage.setItem('schoolClass', schoolClass.toString());
+                if (!response.data.user.avatar_skin) {
+                    navigation.navigate('AvatarPage');
+                } else if (!response.data.user.name) {
+                    navigation.navigate('NamePage');
+                }
+            }
         } else {
             const storageRegistrationNumber = await AsyncStorage.getItem('registrationNumber');
             const storageSchoolClass = await AsyncStorage.getItem('schoolClass');
             if (storageRegistrationNumber && storageSchoolClass) {
-                navigation.navigate('AvatarPage');
+                const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/users/login', {
+                    registration_number: storageRegistrationNumber,
+                    class: Number(storageSchoolClass)
+                });
+                if (response.data.success) {
+                    setUser(response.data.user);
+                    if (!response.data.user.avatar_skin) {
+                        navigation.navigate('AvatarPage');
+                    } else if (!response.data.user.name) {
+                        navigation.navigate('NamePage');
+                    }
+                }
             } else {
                 navigation.navigate('HomePage');
+            }
+        }
+    }
+
+    async function updateName (name) {
+        if (user.id && name) {
+            const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/users/save-name', {
+                registration_number: user.registration_number,
+                class: user.class,
+                name: name
+            });
+            if (response.data.success) {
+                setUser(response.data.user);
+            }
+        }
+    }
+
+    async function updateAvatar (avatarSkin, avatarEye, avatarHair, avatarHairColor) {
+        console.log({
+            registration_number: user.registration_number,
+            class: user.class,
+            avatar_skin: avatarSkin,
+            avatar_eye: avatarEye,
+            avatar_hair: avatarHair,
+            avatarHairColor: avatarHairColor
+        });
+        if (user.id && avatarSkin && avatarEye && avatarHairColor) {
+            const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/users/save-avatar', {
+                registration_number: user.registration_number,
+                class: user.class,
+                avatar_skin: avatarSkin,
+                avatar_eye: avatarEye,
+                avatar_hair: avatarHair || 0,
+                avatar_hair_color: avatarHairColor
+            });
+            if (response.data.success) {
+                setUser(response.data.user);
+                console.log('deu certo o avatar');
+                navigation.navigate('NamePage');
             }
         }
     }
@@ -36,8 +97,10 @@ function AuthProvider({children}) {
     return (
         <AuthContext.Provider value={{
             verifyLogin,
+            updateName,
+            updateAvatar,
             signOut, 
-            user, setUser
+            user
         }}>
             {children}
         </AuthContext.Provider>

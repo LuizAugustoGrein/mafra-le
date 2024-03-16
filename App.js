@@ -8,6 +8,7 @@ import SplashScreenPage from './src/screens/SplashScreenPage';
 import HomePage from './src/screens/HomePage';
 import EnterFormPage from './src/screens/EnterFormPage';
 import AvatarPage from './src/screens/AvatarPage';
+import NamePage from './src/screens/NamePage';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,11 +18,12 @@ export default function App() {
   return (
     <NavigationContainer>
       <AuthProvider>
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='AvatarPage' >
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='SplashScreenPage' >
           <Stack.Screen name={"SplashScreenPage"} component={SplashScreenPage} />
           <Stack.Screen name={"HomePage"} component={HomePage} />
           <Stack.Screen name={"EnterFormPage"} component={EnterFormPage} />
           <Stack.Screen name={"AvatarPage"} component={AvatarPage} />
+          <Stack.Screen name={"NamePage"} component={NamePage} />
         </Stack.Navigator>
       </AuthProvider>
     </NavigationContainer>

@@ -1,17 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView, React } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, TouchableOpacity } from 'react-native';
-import { useCallback, useEffect, useState } from 'react';
-import CustomButton from '../components/CustomButton';
+import { useCallback, useEffect, useState, useContext } from 'react';
 import WelcomeDescription from '../components/WelcomeDescription';
-import LogoImage from '../components/LogoImage';
-import { CustomTextInput } from '../components/CustomTextInput';
 import * as ScreenOrientation from "expo-screen-orientation";
 
 import { useNavigation } from '@react-navigation/native';
 
 import { useFocusEffect } from '@react-navigation/native';
+
+import { AuthContext } from '../contexts/auth';
 
 import SkinColor from '../avatar/SkinColor';
 import Hair from '../avatar/Hair';
@@ -26,10 +24,12 @@ const hairImages = {
 
 export default function AvatarPage () {
 
+  const { updateAvatar } = useContext(AuthContext);
+
   const [skinColor, setSkinColor] = useState(3);
-  const [eyeColor, setEyeColor] = useState(0);
+  const [eyeColor, setEyeColor] = useState(10);
   const [hairType, setHairType] = useState(0);
-  const [hairColor, setHairColor] = useState(0);
+  const [hairColor, setHairColor] = useState(10);
 
   const [step, setStep] = useState(1);
 
@@ -64,11 +64,11 @@ export default function AvatarPage () {
                 </View>
                 <ScrollView style={styles.choseOptionScroll}>
                   <View style={styles.choseOptionContent}>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FFE1B6' }]} onPress={() => setSkinColor(1)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#EBC896' }]} onPress={() => setSkinColor(2)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FDC473' }]} onPress={() => setSkinColor(3)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#9D835E' }]} onPress={() => setSkinColor(4)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#442B22' }]} onPress={() => setSkinColor(5)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#FFE1B6' }, (skinColor == 1) ? styles.avatarOptionSelected : {}]} onPress={() => setSkinColor(1)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#EBC896' }, (skinColor == 2) ? styles.avatarOptionSelected : {}]} onPress={() => setSkinColor(2)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#FDC473' }, (skinColor == 3) ? styles.avatarOptionSelected : {}]} onPress={() => setSkinColor(3)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#9D835E' }, (skinColor == 4) ? styles.avatarOptionSelected : {}]} onPress={() => setSkinColor(4)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#442B22' }, (skinColor == 5) ? styles.avatarOptionSelected : {}]} onPress={() => setSkinColor(5)}></TouchableOpacity>
                   </View>
                 </ScrollView>
               </>
@@ -80,16 +80,16 @@ export default function AvatarPage () {
                 </View>
                 <ScrollView style={styles.choseOptionScroll}>
                   <View style={styles.choseOptionContent}>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#663300' }]} onPress={() => setEyeColor(1)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#0000FF' }]} onPress={() => setEyeColor(2)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#008000' }]} onPress={() => setEyeColor(3)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#808080' }]} onPress={() => setEyeColor(4)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FFBF00' }]} onPress={() => setEyeColor(5)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#D4AF37' }]} onPress={() => setEyeColor(6)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#996633' }]} onPress={() => setEyeColor(7)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#8A2BE2' }]} onPress={() => setEyeColor(8)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FF0000' }]} onPress={() => setEyeColor(9)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#000000' }]} onPress={() => setEyeColor(10)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#663300' }, (eyeColor == 1) ? styles.avatarOptionSelected : {}]} onPress={() => setEyeColor(1)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#0000FF' }, (eyeColor == 2) ? styles.avatarOptionSelected : {}]} onPress={() => setEyeColor(2)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#008000' }, (eyeColor == 3) ? styles.avatarOptionSelected : {}]} onPress={() => setEyeColor(3)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#808080' }, (eyeColor == 4) ? styles.avatarOptionSelected : {}]} onPress={() => setEyeColor(4)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#FFBF00' }, (eyeColor == 5) ? styles.avatarOptionSelected : {}]} onPress={() => setEyeColor(5)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#D4AF37' }, (eyeColor == 6) ? styles.avatarOptionSelected : {}]} onPress={() => setEyeColor(6)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#996633' }, (eyeColor == 7) ? styles.avatarOptionSelected : {}]} onPress={() => setEyeColor(7)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#8A2BE2' }, (eyeColor == 8) ? styles.avatarOptionSelected : {}]} onPress={() => setEyeColor(8)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#FF0000' }, (eyeColor == 9) ? styles.avatarOptionSelected : {}]} onPress={() => setEyeColor(9)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#000000' }, (eyeColor == 10) ? styles.avatarOptionSelected : {}]} onPress={() => setEyeColor(10)}></TouchableOpacity>
                   </View>
                 </ScrollView>
               </>
@@ -101,26 +101,26 @@ export default function AvatarPage () {
                 </View>
                 <ScrollView style={styles.choseOptionScroll}>
                   <View style={styles.choseOptionContent}>
-                    <TouchableOpacity style={[styles.hairOption, { backgroundColor: '#ccc' } ]} onPress={() => setHairType(1)}>
+                    <TouchableOpacity style={[styles.hairOption, { backgroundColor: '#ccc' }, (hairType == 1) ? styles.avatarOptionSelected : {} ]} onPress={() => setHairType(1)}>
                       <Image source={hairImages['hair1']} resizeMode="contain" style={{
                         width: '110%',
                         maxHeight: '280%'
                       }} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.hairOption, { backgroundColor: '#ccc' } ]} onPress={() => setHairType(2)}>
+                    <TouchableOpacity style={[styles.hairOption, { backgroundColor: '#ccc' }, (hairType == 2) ? styles.avatarOptionSelected : {} ]} onPress={() => setHairType(2)}>
                       <Image source={hairImages['hair2']} resizeMode="contain" style={{
                         width: '110%',
                         maxHeight: '280%'
                       }} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.hairOption, { backgroundColor: '#ccc' } ]} onPress={() => setHairType(3)}>
+                    <TouchableOpacity style={[styles.hairOption, { backgroundColor: '#ccc' }, (hairType == 3) ? styles.avatarOptionSelected : {} ]} onPress={() => setHairType(3)}>
                       <Image source={hairImages['hair3']} resizeMode="contain" style={{
                         width: '110%',
                         maxHeight: '280%',
                         marginLeft: 5
                       }} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.hairOption, { backgroundColor: '#ccc' } ]} onPress={() => setHairType(4)}>
+                    <TouchableOpacity style={[styles.hairOption, { backgroundColor: '#ccc' }, (hairType == 4) ? styles.avatarOptionSelected : {} ]} onPress={() => setHairType(4)}>
                       <Image source={hairImages['hair4']} resizeMode="contain" style={{
                         width: '110%',
                         maxHeight: '280%'
@@ -137,23 +137,55 @@ export default function AvatarPage () {
                 </View>
                 <ScrollView style={styles.choseOptionScroll}>
                   <View style={styles.choseOptionContent}>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#663300' }]} onPress={() => setHairColor(1)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#0000FF' }]} onPress={() => setHairColor(2)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#008000' }]} onPress={() => setHairColor(3)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#808080' }]} onPress={() => setHairColor(4)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FFBF00' }]} onPress={() => setHairColor(5)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#D4AF37' }]} onPress={() => setHairColor(6)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#996633' }]} onPress={() => setHairColor(7)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#8A2BE2' }]} onPress={() => setHairColor(8)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#FF0000' }]} onPress={() => setHairColor(9)}></TouchableOpacity>
-                    <TouchableOpacity style={[styles.skinOption, { backgroundColor: '#000000' }]} onPress={() => setHairColor(10)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#663300' }, (hairColor == 1) ? styles.avatarOptionSelected : {}]} onPress={() => setHairColor(1)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#0000FF' }, (hairColor == 2) ? styles.avatarOptionSelected : {}]} onPress={() => setHairColor(2)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#008000' }, (hairColor == 3) ? styles.avatarOptionSelected : {}]} onPress={() => setHairColor(3)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#808080' }, (hairColor == 4) ? styles.avatarOptionSelected : {}]} onPress={() => setHairColor(4)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#FFBF00' }, (hairColor == 5) ? styles.avatarOptionSelected : {}]} onPress={() => setHairColor(5)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#D4AF37' }, (hairColor == 6) ? styles.avatarOptionSelected : {}]} onPress={() => setHairColor(6)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#996633' }, (hairColor == 7) ? styles.avatarOptionSelected : {}]} onPress={() => setHairColor(7)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#8A2BE2' }, (hairColor == 8) ? styles.avatarOptionSelected : {}]} onPress={() => setHairColor(8)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#FF0000' }, (hairColor == 9) ? styles.avatarOptionSelected : {}]} onPress={() => setHairColor(9)}></TouchableOpacity>
+                    <TouchableOpacity style={[styles.avatarOption, { backgroundColor: '#000000' }, (hairColor == 10) ? styles.avatarOptionSelected : {}]} onPress={() => setHairColor(10)}></TouchableOpacity>
                   </View>
                 </ScrollView>
               </>
             }
-            <TouchableOpacity style={[styles.confirmButton]} onPress={() => { setStep(step + 1); }}>
-                <Text style={styles.confirmButtonText}>Continuar</Text>
-            </TouchableOpacity>
+            {(step == 1) &&
+              <TouchableOpacity style={[styles.confirmButton]} onPress={() => { setStep(step + 1); }}>
+                  <Text style={styles.confirmButtonText}>Continuar</Text>
+              </TouchableOpacity>
+            }
+            {(step == 2) &&
+              <View style={{ display: 'flex', flexDirection: 'row', marginRight: 40 }}>
+                <TouchableOpacity style={[styles.backButtonHalf]} onPress={() => { setStep(step - 1); }}>
+                  <Text style={styles.confirmButtonText}>Voltar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.confirmButtonHalf]} onPress={() => { setStep(step + 1); }}>
+                  <Text style={styles.confirmButtonText}>Continuar</Text>
+                </TouchableOpacity>
+              </View>
+            }
+            {(step == 3) &&
+              <View style={{ display: 'flex', flexDirection: 'row', marginRight: 40 }}>
+                <TouchableOpacity style={[styles.backButtonHalf]} onPress={() => { setStep(step - 1); }}>
+                  <Text style={styles.confirmButtonText}>Voltar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.confirmButtonHalf]} onPress={() => { setStep(step + 1); }}>
+                  <Text style={styles.confirmButtonText}>Continuar</Text>
+                </TouchableOpacity>
+              </View>
+            }
+            {(step == 4) &&
+              <View style={{ display: 'flex', flexDirection: 'row', marginRight: 40 }}>
+                <TouchableOpacity style={[styles.backButtonHalf]} onPress={() => { setStep(step - 1); }}>
+                  <Text style={styles.confirmButtonText}>Voltar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.confirmButtonHalf]} onPress={() => { updateAvatar(skinColor, eyeColor, hairType, hairColor) }}>
+                  <Text style={styles.confirmButtonText}>Confirmar</Text>
+                </TouchableOpacity>
+              </View>
+            }
         </View>
         <View style={styles.previewSection}>
           <SkinColor skinOption={skinColor}></SkinColor>
@@ -243,13 +275,17 @@ const styles = StyleSheet.create({
         height: '100%',
         resizeMode: 'contain',
     },
-    skinOption: {
+    avatarOption: {
         width: 70,
         height: 70,
         margin: 5,
         borderWidth: 3,
         borderColor: 'black',
         borderRadius: 10
+    },
+    avatarOptionSelected: {
+      borderWidth: 5,
+      borderColor: 'green'
     },
     hairOption: {
       width: 100,
@@ -265,6 +301,18 @@ const styles = StyleSheet.create({
         padding: 10,
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
+    },
+    backButtonHalf: {
+      backgroundColor: '#383838',
+      padding: 10,
+      width: '50%',
+      borderBottomLeftRadius: 15,
+    },
+    confirmButtonHalf: {
+      backgroundColor: 'green',
+      padding: 10,
+      width: '50%',
+      borderBottomRightRadius: 15,
     },
     confirmButtonText: {
         color: 'white',
