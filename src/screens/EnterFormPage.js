@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { useFocusEffect } from '@react-navigation/native';
 
-const selectOptions = ["Escolha uma opção", "1° Ano", "2° Ano", "3° Ano", "4° Ano", "5° Ano", "6° Ano", "7° Ano", "8° Ano", "9° Ano"];
+const selectOptions = ["Escolha uma opção", "1° Ano", "2° Ano", "3° Ano", "4° Ano", "5° Ano"];
 
 import { AuthContext } from '../contexts/auth';
 

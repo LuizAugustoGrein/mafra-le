@@ -9,6 +9,7 @@ import HomePage from './src/screens/HomePage';
 import EnterFormPage from './src/screens/EnterFormPage';
 import AvatarPage from './src/screens/AvatarPage';
 import NamePage from './src/screens/NamePage';
+import QuestionPage from './src/screens/QuestionPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ export default function App() {
           <Stack.Screen name={"EnterFormPage"} component={EnterFormPage} />
           <Stack.Screen name={"AvatarPage"} component={AvatarPage} />
           <Stack.Screen name={"NamePage"} component={NamePage} />
+          <Stack.Screen name={"QuestionPage"} component={QuestionPage} />
         </Stack.Navigator>
       </AuthProvider>
     </NavigationContainer>

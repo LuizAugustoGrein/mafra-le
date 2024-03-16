@@ -10,10 +10,22 @@ function AuthProvider({children}) {
     const navigation = useNavigation();
 
     const [user, setUser] = useState();
+    const [pendingQuestions, setPendingQuestions] = useState([]);
+
+    async function updatePendingQuestions () {
+        const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/books/get-questions', {
+            registration_number: registrationNumber,
+            class: schoolClass
+        });
+        if (response.data.success) {
+            setPendingQuestions(response.data);
+            if (response.data.length > 0) {
+                console.log('tem perguntas');
+            }
+        }
+    }
          
     async function verifyLogin (registrationNumber = null, schoolClass = null) {
-        // await AsyncStorage.setItem('registrationNumber', '');
-        // await AsyncStorage.setItem('schoolClass', '');
         if (registrationNumber && schoolClass) {
             const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/users/login', {
                 registration_number: registrationNumber,
@@ -27,6 +39,8 @@ function AuthProvider({children}) {
                     navigation.navigate('AvatarPage');
                 } else if (!response.data.user.name) {
                     navigation.navigate('NamePage');
+                } else {
+                    navigation.navigate('QuestionPage');
                 }
             }
         } else {
@@ -43,6 +57,8 @@ function AuthProvider({children}) {
                         navigation.navigate('AvatarPage');
                     } else if (!response.data.user.name) {
                         navigation.navigate('NamePage');
+                    } else {
+                        navigation.navigate('QuestionPage');
                     }
                 }
             } else {
@@ -60,6 +76,7 @@ function AuthProvider({children}) {
             });
             if (response.data.success) {
                 setUser(response.data.user);
+                navigation.navigate('QuestionPage');
             }
         }
     }
