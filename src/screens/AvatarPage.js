@@ -15,16 +15,19 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import SkinColor from '../avatar/SkinColor';
 import Hair from '../avatar/Hair';
+import Eyes from '../avatar/Eyes';
 
 const hairImages = {
   hair1: require('../../assets/avatar/hair/1/10.png'),
   hair2: require('../../assets/avatar/hair/2/10.png'),
+  hair3: require('../../assets/avatar/hair/3/10.png'),
+  hair4: require('../../assets/avatar/hair/4/10.png'),
 };
 
 export default function AvatarPage () {
 
   const [skinColor, setSkinColor] = useState(3);
-  const [eyeColor, setEyeColor] = useState(10);
+  const [eyeColor, setEyeColor] = useState(0);
   const [hairType, setHairType] = useState(0);
   const [hairColor, setHairColor] = useState(0);
 
@@ -110,6 +113,19 @@ export default function AvatarPage () {
                         maxHeight: '280%'
                       }} />
                     </TouchableOpacity>
+                    <TouchableOpacity style={[styles.hairOption, { backgroundColor: '#ccc' } ]} onPress={() => setHairType(3)}>
+                      <Image source={hairImages['hair3']} resizeMode="contain" style={{
+                        width: '110%',
+                        maxHeight: '280%',
+                        marginLeft: 5
+                      }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.hairOption, { backgroundColor: '#ccc' } ]} onPress={() => setHairType(4)}>
+                      <Image source={hairImages['hair4']} resizeMode="contain" style={{
+                        width: '110%',
+                        maxHeight: '280%'
+                      }} />
+                    </TouchableOpacity>
                   </View>
                 </ScrollView>
               </>
@@ -141,7 +157,8 @@ export default function AvatarPage () {
         </View>
         <View style={styles.previewSection}>
           <SkinColor skinOption={skinColor}></SkinColor>
-          <Hair hairType={hairType}></Hair>
+          <Hair hairType={hairType} hairColor={hairColor}></Hair>
+          <Eyes eyeColor={eyeColor} ></Eyes>
         </View>
       </LinearGradient>
     </View>
