@@ -17,7 +17,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <AuthProvider>
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='SplashScreenPage' >
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='AvatarPage' >
           <Stack.Screen name={"SplashScreenPage"} component={SplashScreenPage} />
           <Stack.Screen name={"HomePage"} component={HomePage} />
           <Stack.Screen name={"EnterFormPage"} component={EnterFormPage} />

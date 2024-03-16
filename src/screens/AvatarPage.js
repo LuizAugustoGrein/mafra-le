@@ -16,10 +16,16 @@ import { useFocusEffect } from '@react-navigation/native';
 import SkinColor from '../avatar/SkinColor';
 import Hair from '../avatar/Hair';
 
+const hairImages = {
+  hair1: require('../../assets/avatar/hair/1/10.png'),
+  hair2: require('../../assets/avatar/hair/2/10.png'),
+};
+
 export default function AvatarPage () {
 
   const [skinColor, setSkinColor] = useState(3);
   const [eyeColor, setEyeColor] = useState(10);
+  const [hairType, setHairType] = useState(0);
   const [hairColor, setHairColor] = useState(0);
 
   const [step, setStep] = useState(1);
@@ -92,7 +98,18 @@ export default function AvatarPage () {
                 </View>
                 <ScrollView style={styles.choseOptionScroll}>
                   <View style={styles.choseOptionContent}>
-                    
+                    <TouchableOpacity style={[styles.hairOption, { backgroundColor: '#ccc' } ]} onPress={() => setHairType(1)}>
+                      <Image source={hairImages['hair1']} resizeMode="contain" style={{
+                        width: '110%',
+                        maxHeight: '280%'
+                      }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.hairOption, { backgroundColor: '#ccc' } ]} onPress={() => setHairType(2)}>
+                      <Image source={hairImages['hair2']} resizeMode="contain" style={{
+                        width: '110%',
+                        maxHeight: '280%'
+                      }} />
+                    </TouchableOpacity>
                   </View>
                 </ScrollView>
               </>
@@ -124,7 +141,7 @@ export default function AvatarPage () {
         </View>
         <View style={styles.previewSection}>
           <SkinColor skinOption={skinColor}></SkinColor>
-          <Hair hairColor={hairColor}></Hair>
+          <Hair hairType={hairType}></Hair>
         </View>
       </LinearGradient>
     </View>
@@ -175,7 +192,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#B37E7E',
         borderWidth: 4,
         borderColor: 'white',
-        borderRadius: 20
+        borderRadius: 20,
+        position: 'relative'
     },
     choseOptionTitle: {
         backgroundColor: 'white',
@@ -215,6 +233,14 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderColor: 'black',
         borderRadius: 10
+    },
+    hairOption: {
+      width: 100,
+      height: 100,
+      margin: 5,
+      borderWidth: 3,
+      borderColor: 'black',
+      borderRadius: 10
     },
     confirmButton: {
         backgroundColor: 'green',

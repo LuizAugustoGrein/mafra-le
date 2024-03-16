@@ -1,17 +1,25 @@
-import Avatar1 from '../../assets/avatar/Avatar1';
-import Avatar2 from '../../assets/avatar/Avatar2';
-import Avatar3 from '../../assets/avatar/Avatar3';
-import Avatar4 from '../../assets/avatar/Avatar4';
-import Avatar5 from '../../assets/avatar/Avatar5';
+import React from 'react';
+import { Image, View } from 'react-native';
 
-export default function SkinColor({skinOption}) {
-  return (
-    <>
-      {skinOption == 1 && <Avatar1 />}
-      {skinOption == 2 && <Avatar2 />}
-      {skinOption == 3 && <Avatar3 />}
-      {skinOption == 4 && <Avatar4 />}
-      {skinOption == 5 && <Avatar5 />}
-    </>
-  );
+const avatarImages = {
+  skin1: require('../../assets/avatar/skin/1.png'),
+  skin2: require('../../assets/avatar/skin/2.png'),
+  skin3: require('../../assets/avatar/skin/3.png'),
+  skin4: require('../../assets/avatar/skin/4.png'),
+  skin5: require('../../assets/avatar/skin/5.png')
+};
+
+function avatar(option) {
+  const imageSource = avatarImages[`skin${option}`];
+
+  return <Image source={imageSource} resizeMode="contain" style={{
+    width: '100%',
+    height: '95%',
+    position: 'absolute',
+    top: 0
+  }} />
+}
+
+export default function SkinColor({ skinOption }) {
+  return avatar(skinOption);
 }
