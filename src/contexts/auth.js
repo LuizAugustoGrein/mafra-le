@@ -14,18 +14,17 @@ function AuthProvider({children}) {
 
     async function updatePendingQuestions () {
         const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/books/get-questions', {
-            registration_number: registrationNumber,
-            class: schoolClass
+            registration_number: user.registration_number,
+            class: user.class
         });
-        if (response.data.success) {
+        if (response.data.length) {
             setPendingQuestions(response.data);
-            if (response.data.length > 0) {
-                console.log('tem perguntas');
-            }
         }
     }
          
     async function verifyLogin (registrationNumber = null, schoolClass = null) {
+        // await AsyncStorage.removeItem('registrationNumber');
+        // await AsyncStorage.removeItem('schoolClass');
         if (registrationNumber && schoolClass) {
             const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/users/login', {
                 registration_number: registrationNumber,
@@ -82,14 +81,6 @@ function AuthProvider({children}) {
     }
 
     async function updateAvatar (avatarSkin, avatarEye, avatarHair, avatarHairColor) {
-        console.log({
-            registration_number: user.registration_number,
-            class: user.class,
-            avatar_skin: avatarSkin,
-            avatar_eye: avatarEye,
-            avatar_hair: avatarHair,
-            avatarHairColor: avatarHairColor
-        });
         if (user.id && avatarSkin && avatarEye && avatarHairColor) {
             const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/users/save-avatar', {
                 registration_number: user.registration_number,
@@ -101,7 +92,6 @@ function AuthProvider({children}) {
             });
             if (response.data.success) {
                 setUser(response.data.user);
-                console.log('deu certo o avatar');
                 navigation.navigate('NamePage');
             }
         }
@@ -116,6 +106,7 @@ function AuthProvider({children}) {
             verifyLogin,
             updateName,
             updateAvatar,
+            updatePendingQuestions, pendingQuestions,
             signOut, 
             user
         }}>

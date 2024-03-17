@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, React } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Image, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useCallback, useEffect, useState, useContext } from 'react';
 import WelcomeDescription from '../components/WelcomeDescription';
 import * as ScreenOrientation from "expo-screen-orientation";
@@ -11,11 +11,20 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { AuthContext } from '../contexts/auth';
 
+import axios from 'axios';
+
 export default function QuestionPage () {
 
-  const { updateAvatar } = useContext(AuthContext);
+  const { updatePendingQuestions, pendingQuestions, user } = useContext(AuthContext);
 
-  const [skinColor, setSkinColor] = useState(3);
+  const [currentQuestion, setCurrentQuestion] = useState({});
+
+  const [response, setResponse] = useState();
+  const [responseRight, setResponseRight] = useState();
+
+  const [loading, setLoading] = useState(false);
+
+  const [currentStep, setCurrentStep] = useState(1);
 
   const navigation = useNavigation();
 
@@ -31,12 +40,49 @@ export default function QuestionPage () {
     }, [])
   );
 
+  useEffect(() => {
+    updatePendingQuestions();
+  }, []);
+
+  useEffect(() => {
+    console.log('response: ', response);
+  }, [response]);
+
+  useEffect(() => {
+    if (pendingQuestions.length > 0) {
+      setCurrentQuestion(pendingQuestions[0]);
+    }
+    // console.log(pendingQuestions);
+  }, [pendingQuestions]);
+
+  async function answerQuestion (resp) {
+    if (responseRight) {
+
+      await axios.post('https://luizgrein.com/projects/mafra-le/api/books/save-response', {
+        registration_number: user.registration_number,
+        class: user.class,
+        answers_id: resp
+      });
+
+      setResponseRight(null);
+      setResponse(null);
+    
+      setCurrentStep(4);
+    } else {
+      setResponseRight(null);
+      setResponse(null);
+  
+      setCurrentStep(3);
+    }
+  }
+
   return (
     <View style={styles.container}>
-        {/* <>
+      {(currentStep == 1) &&
+        <>
           <View style={styles.imageColumn}>
             <Image
-                source={{ uri: 'https://luizgrein.com/projects/mafra-le/static/capa1.png' }}
+                source={{ uri: currentQuestion.left_image }}
                 resizeMode='cover'
                 style={{
                   height: '100%',
@@ -45,31 +91,43 @@ export default function QuestionPage () {
             />
           </View>
           <View style={styles.contentColumn}>
-            <Text style={{ fontSize: 35, fontWeight: 600, paddingBottom: 20 }}>Restaurante Animal</Text>
-            <Text style={{ fontSize: 23, fontWeight: 400 }}>O livro apresenta um restaurante que atende ao paladar de diferentes animais. Por meio de divertidas rimas, conhecemos a preferência alimentar do cachorro, da pulga, do peixe, da baleia, da vaca, do besouro... Esse restaurante animal atende a gostos refinados ou esquisitos, a depender da exigência do cliente!</Text>
-            <TouchableOpacity style={{ backgroundColor: '#BD2F0A', padding: 15, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }}>
+            <Text style={{ fontSize: 35, fontWeight: 600, paddingBottom: 20 }}>{currentQuestion.title}</Text>
+            <Text style={{ fontSize: 23, fontWeight: 400 }}>{currentQuestion.description}</Text>
+            <TouchableOpacity onPress={() => { setCurrentStep(2) }} style={{ backgroundColor: currentQuestion.button_color, padding: 15, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }}>
               <Text style={{ color: 'white', fontSize: 25, fontWeight: 600, textAlign: 'center'}}>Vamos lá</Text>
             </TouchableOpacity>
           </View>
-        </> */}
+        </>
+      }
+      {(currentStep == 2) &&
         <>
           <View style={styles.contentColumn}>
-            <Text style={{ fontSize: 30, fontWeight: 600, paddingBottom: 25, textAlign: 'center' }}>TODOS OS ANIMAIS SÃO SERES VIVOS E PRECISAM:</Text>
-            <TouchableOpacity style={{ backgroundColor: '#E5EFCC', padding: 15, borderRadius: 15, width: '80%', alignSelf: 'center', marginBottom: 20 }}>
-              <Text style={{ color: 'black', fontSize: 25, textAlign: 'center'}}>SE ALIMENTAR</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ backgroundColor: '#E5EFCC', padding: 15, borderRadius: 15, width: '80%', alignSelf: 'center', marginBottom: 20 }}>
-              <Text style={{ color: 'black', fontSize: 25, textAlign: 'center'}}>APENAS GANHAR CARINHO</Text>
-            </TouchableOpacity>
+            <Text style={{ fontSize: 22, fontWeight: 600, paddingBottom: 25, textAlign: 'center' }}>{currentQuestion.questions[0].question}</Text>
+            {currentQuestion.questions[0].answers.map((answer, index) => (
+              <TouchableOpacity 
+                onPress={() => { setResponseRight(answer.is_right); setResponse(answer.id); }}
+                key={index} 
+                style={[
+                  { backgroundColor: '#E5EFCC', padding: 10, borderRadius: 15, width: '80%', alignSelf: 'center', marginBottom: 20, borderWidth: 3, borderColor: '#E5EFCC' },
+                  (answer.id == response) ? { borderWidth: 3, borderColor: '#555'} : {}
+                ]}>
+                <Text style={{ color: 'black', fontSize: 20, textAlign: 'center'}}>{answer.response}</Text>
+              </TouchableOpacity>
+            ))}
 
-
-            <TouchableOpacity style={{ backgroundColor: '#BD2F0A', padding: 15, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }}>
+            <TouchableOpacity 
+              disabled={!response} 
+              onPress={() => answerQuestion(response)} 
+              style={[
+                { backgroundColor: '#BD2F0A', padding: 15, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  },
+                (!response) ? { backgroundColor: '#b85f67' } : {}
+              ]}>
               <Text style={{ color: 'white', fontSize: 25, fontWeight: 600, textAlign: 'center'}}>Confirmar</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.imageColumn}>
             <Image
-                source={{ uri: 'https://luizgrein.com/projects/mafra-le/static/capa2.png' }}
+                source={{ uri: currentQuestion.right_image }}
                 resizeMode='cover'
                 style={{
                   height: '100%',
@@ -78,6 +136,73 @@ export default function QuestionPage () {
             />
           </View>
         </>
+      }
+      {(currentStep == 3) &&
+        <>
+          <View style={styles.contentColumn}>
+            <Text style={{ fontSize: 35, fontWeight: 600, paddingTop: 30, paddingBottom: 50, textAlign: 'center', color: 'red' }}>RESPOSTA INCORRETA</Text>
+            <Text style={{ fontSize: 25, textAlign: 'center', width: '90%', alignSelf: 'center' }}>Não se preocupe, todos nós cometemos erros. O importante é aprender com eles e continuar tentando. Você está no caminho certo!</Text>
+
+            <TouchableOpacity
+              onPress={() => setCurrentStep(1)} 
+              style={[
+                { backgroundColor: '#BD2F0A', padding: 15, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }
+              ]}>
+              <Text style={{ color: 'white', fontSize: 25, fontWeight: 600, textAlign: 'center'}}>Tentar novamente</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.imageColumn}>
+            <Image
+                source={{ uri: currentQuestion.right_image }}
+                resizeMode='cover'
+                style={{
+                  height: '100%',
+                  width: '100%'
+                }}
+            />
+          </View>
+        </>
+      }
+      {(currentStep == 4) &&
+        <>
+          <View style={styles.contentColumn}>
+            <Text style={{ fontSize: 35, fontWeight: 600, paddingTop: 80, paddingBottom: 50, textAlign: 'center', color: 'green' }}>VOCÊ ACERTOU!</Text>
+
+            <TouchableOpacity
+              onPress={() => {
+                updatePendingQuestions();
+                setLoading(true);
+                setTimeout(function() {
+                  if (pendingQuestions[0].questions.length > 1) {
+                    setCurrentStep(2);
+                  } else {
+                    setCurrentStep(1);
+                  }
+                  setLoading(false);
+                }, 250); 
+              }} 
+              style={[
+                { backgroundColor: '#BD2F0A', padding: 15, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }
+              ]}>
+                {(loading) ?
+                  <ActivityIndicator size="small" color="white" style={{ padding: 5 }} />
+                  :
+                  <Text style={{ color: 'white', fontSize: 25, fontWeight: 600, textAlign: 'center'}}>Continuar</Text>
+                }
+            </TouchableOpacity>
+          </View>
+          <View style={styles.imageColumn}>
+            <Image
+                source={{ uri: currentQuestion.right_image }}
+                resizeMode='cover'
+                style={{
+                  height: '100%',
+                  width: '100%'
+                }}
+            />
+          </View>
+        </>
+      }
     </View>
   );
 }
