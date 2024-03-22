@@ -91,8 +91,8 @@ export default function QuestionPage () {
             />
           </View>
           <View style={styles.contentColumn}>
-            <Text style={{ fontSize: 35, fontWeight: 600, paddingBottom: 20 }}>{currentQuestion.title}</Text>
-            <Text style={{ fontSize: 23, fontWeight: 400 }}>{currentQuestion.description}</Text>
+            <Text style={{ fontSize: 30, fontWeight: 600, paddingBottom: 20 }}>{currentQuestion.title}</Text>
+            <Text style={{ fontSize: 20, fontWeight: 400 }}>{currentQuestion.description}</Text>
             <TouchableOpacity onPress={() => { setCurrentStep(2) }} style={{ backgroundColor: currentQuestion.button_color, padding: 15, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }}>
               <Text style={{ color: 'white', fontSize: 25, fontWeight: 600, textAlign: 'center'}}>Vamos lá</Text>
             </TouchableOpacity>
@@ -103,17 +103,20 @@ export default function QuestionPage () {
         <>
           <View style={styles.contentColumn}>
             <Text style={{ fontSize: 22, fontWeight: 600, paddingBottom: 25, textAlign: 'center' }}>{currentQuestion.questions[0].question}</Text>
-            {currentQuestion.questions[0].answers.map((answer, index) => (
-              <TouchableOpacity 
-                onPress={() => { setResponseRight(answer.is_right); setResponse(answer.id); }}
-                key={index} 
-                style={[
-                  { backgroundColor: '#E5EFCC', padding: 10, borderRadius: 15, width: '80%', alignSelf: 'center', marginBottom: 20, borderWidth: 3, borderColor: '#E5EFCC' },
-                  (answer.id == response) ? { borderWidth: 3, borderColor: '#555'} : {}
-                ]}>
-                <Text style={{ color: 'black', fontSize: 20, textAlign: 'center'}}>{answer.response}</Text>
-              </TouchableOpacity>
-            ))}
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+              {currentQuestion.questions[0].answers.map((answer, index) => (
+                <TouchableOpacity 
+                  onPress={() => { setResponseRight(answer.is_right); setResponse(answer.id); }}
+                  key={index} 
+                  style={[
+                    { backgroundColor: '#E5EFCC', padding: 10, borderRadius: 15, width: '45%', alignSelf: 'center', marginBottom: 20, borderWidth: 3, borderColor: '#E5EFCC' },
+                    (answer.id == response) ? { borderWidth: 3, borderColor: '#555'} : {}
+                  ]}>
+                  <Text style={{ color: 'black', fontSize: 20, textAlign: 'center'}}>{answer.response}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            
 
             <TouchableOpacity 
               disabled={!response} 
