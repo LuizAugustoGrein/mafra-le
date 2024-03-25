@@ -17,7 +17,9 @@ function AuthProvider({children}) {
             registration_number: user.registration_number,
             class: user.class
         });
-        if (response.data.length) {
+        if (response.data.finished) {
+            navigation.navigate('CompletionPage');
+        } else if (response.data.length) {
             setPendingQuestions(response.data);
         }
     }

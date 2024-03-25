@@ -45,14 +45,9 @@ export default function QuestionPage () {
   }, []);
 
   useEffect(() => {
-    console.log('response: ', response);
-  }, [response]);
-
-  useEffect(() => {
     if (pendingQuestions.length > 0) {
       setCurrentQuestion(pendingQuestions[0]);
     }
-    // console.log(pendingQuestions);
   }, [pendingQuestions]);
 
   async function answerQuestion (resp) {
@@ -91,10 +86,10 @@ export default function QuestionPage () {
             />
           </View>
           <View style={styles.contentColumn}>
-            <Text style={{ fontSize: 30, fontWeight: 600, paddingBottom: 20 }}>{currentQuestion.title}</Text>
-            <Text style={{ fontSize: 20, fontWeight: 400 }}>{currentQuestion.description}</Text>
-            <TouchableOpacity onPress={() => { setCurrentStep(2) }} style={{ backgroundColor: currentQuestion.button_color, padding: 15, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }}>
-              <Text style={{ color: 'white', fontSize: 25, fontWeight: 600, textAlign: 'center'}}>Vamos lá</Text>
+            <Text style={{ fontSize: 25, fontWeight: 600, paddingBottom: 10 }}>{currentQuestion.title}</Text>
+            <Text style={{ fontSize: 18, fontWeight: 400 }}>{currentQuestion.description}</Text>
+            <TouchableOpacity onPress={() => { setCurrentStep(2) }} style={{ backgroundColor: currentQuestion.button_color, padding: 10, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }}>
+              <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>Vamos lá</Text>
             </TouchableOpacity>
           </View>
         </>
@@ -102,7 +97,7 @@ export default function QuestionPage () {
       {(currentStep == 2) &&
         <>
           <View style={styles.contentColumn}>
-            <Text style={{ fontSize: 22, fontWeight: 600, paddingBottom: 25, textAlign: 'center' }}>{currentQuestion.questions[0].question}</Text>
+            <Text style={{ fontSize: 18, fontWeight: 600, paddingBottom: 25, textAlign: 'center' }}>{currentQuestion.questions[0].question}</Text>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around' }}>
               {currentQuestion.questions[0].answers.map((answer, index) => (
                 <TouchableOpacity 
@@ -112,7 +107,7 @@ export default function QuestionPage () {
                     { backgroundColor: '#E5EFCC', padding: 10, borderRadius: 15, width: '45%', alignSelf: 'center', marginBottom: 20, borderWidth: 3, borderColor: '#E5EFCC' },
                     (answer.id == response) ? { borderWidth: 3, borderColor: '#555'} : {}
                   ]}>
-                  <Text style={{ color: 'black', fontSize: 20, textAlign: 'center'}}>{answer.response}</Text>
+                  <Text style={{ color: 'black', fontSize: 18, textAlign: 'center'}}>{answer.response}</Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -122,10 +117,10 @@ export default function QuestionPage () {
               disabled={!response} 
               onPress={() => answerQuestion(response)} 
               style={[
-                { backgroundColor: '#BD2F0A', padding: 15, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  },
+                { backgroundColor: '#BD2F0A', padding: 10, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  },
                 (!response) ? { backgroundColor: '#b85f67' } : {}
               ]}>
-              <Text style={{ color: 'white', fontSize: 25, fontWeight: 600, textAlign: 'center'}}>Confirmar</Text>
+              <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>Confirmar</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.imageColumn}>
@@ -169,7 +164,7 @@ export default function QuestionPage () {
       {(currentStep == 4) &&
         <>
           <View style={styles.contentColumn}>
-            <Text style={{ fontSize: 35, fontWeight: 600, paddingTop: 80, paddingBottom: 50, textAlign: 'center', color: 'green' }}>VOCÊ ACERTOU!</Text>
+            <Text style={{ fontSize: 25, fontWeight: 600, paddingTop: 100, paddingBottom: 50, textAlign: 'center', color: 'green' }}>VOCÊ ACERTOU!</Text>
 
             <TouchableOpacity
               onPress={() => {
@@ -185,12 +180,12 @@ export default function QuestionPage () {
                 }, 250); 
               }} 
               style={[
-                { backgroundColor: '#BD2F0A', padding: 15, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }
+                { backgroundColor: '#BD2F0A', padding: 10, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }
               ]}>
                 {(loading) ?
                   <ActivityIndicator size="small" color="white" style={{ padding: 5 }} />
                   :
-                  <Text style={{ color: 'white', fontSize: 25, fontWeight: 600, textAlign: 'center'}}>Continuar</Text>
+                  <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>Continuar</Text>
                 }
             </TouchableOpacity>
           </View>
