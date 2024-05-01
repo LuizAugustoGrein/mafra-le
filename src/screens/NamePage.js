@@ -71,9 +71,9 @@ const styles = StyleSheet.create({
     },
     title: {
         textAlign: 'center',
-        marginTop: 100,
+        marginTop: 50,
         color: 'white',
-        fontSize: 40
+        fontSize: 25
     },
     nameForm: {
         width: '60%',
@@ -89,6 +89,6 @@ const styles = StyleSheet.create({
     confirmButtonText: {
         color: 'white',
         textAlign: 'center',
-        fontSize: 20
+        fontSize: 15
     }
 });

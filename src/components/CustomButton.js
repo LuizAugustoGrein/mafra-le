@@ -15,14 +15,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     width: 'auto',
     alignSelf: 'flex-start',
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 20,
     marginTop: 40
   },
   primaryButtonText: {
     color: 'white',
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: '700'
   },
   center: {

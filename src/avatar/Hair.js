@@ -7,6 +7,16 @@ const hairImages = {
   hair2: require('../../assets/avatar/hair/2/10.png'),
   hair3: require('../../assets/avatar/hair/3/10.png'),
   hair4: require('../../assets/avatar/hair/4/10.png'),
+  hair5: require('../../assets/avatar/hair/5/10.png'),
+  hair6: require('../../assets/avatar/hair/6/10.png'),
+  hair7: require('../../assets/avatar/hair/7/10.png'),
+  hair8: {
+    color1: require('../../assets/avatar/hair/8/1.png'),
+    color2: require('../../assets/avatar/hair/8/2.png'),
+    color3: require('../../assets/avatar/hair/8/3.png'),
+    color4: require('../../assets/avatar/hair/8/4.png'),
+    color5: require('../../assets/avatar/hair/8/5.png')
+  }
 };
 
 const hair1colors = {
@@ -61,12 +71,63 @@ const hair4colors = {
   10: require('../../assets/avatar/hair/4/10.png'),
 };
 
-export default function hair({ hairType, hairColor }) {
+const hair5colors = {
+  1: require('../../assets/avatar/hair/5/1.png'),
+  2: require('../../assets/avatar/hair/5/2.png'),
+  3: require('../../assets/avatar/hair/5/3.png'),
+  4: require('../../assets/avatar/hair/5/4.png'),
+  5: require('../../assets/avatar/hair/5/5.png'),
+  6: require('../../assets/avatar/hair/5/6.png'),
+  7: require('../../assets/avatar/hair/5/7.png'),
+  8: require('../../assets/avatar/hair/5/8.png'),
+  9: require('../../assets/avatar/hair/5/9.png'),
+  10: require('../../assets/avatar/hair/5/10.png'),
+};
+
+const hair6colors = {
+  1: require('../../assets/avatar/hair/6/1.png'),
+  2: require('../../assets/avatar/hair/6/2.png'),
+  3: require('../../assets/avatar/hair/6/3.png'),
+  4: require('../../assets/avatar/hair/6/4.png'),
+  5: require('../../assets/avatar/hair/6/5.png'),
+  6: require('../../assets/avatar/hair/6/6.png'),
+  7: require('../../assets/avatar/hair/6/7.png'),
+  8: require('../../assets/avatar/hair/6/8.png'),
+  9: require('../../assets/avatar/hair/6/9.png'),
+  10: require('../../assets/avatar/hair/6/10.png'),
+};
+
+const hair7colors = {
+  1: require('../../assets/avatar/hair/7/1.png'),
+  2: require('../../assets/avatar/hair/7/2.png'),
+  3: require('../../assets/avatar/hair/7/3.png'),
+  4: require('../../assets/avatar/hair/7/4.png'),
+  5: require('../../assets/avatar/hair/7/5.png'),
+  6: require('../../assets/avatar/hair/7/6.png'),
+  7: require('../../assets/avatar/hair/7/7.png'),
+  8: require('../../assets/avatar/hair/7/8.png'),
+  9: require('../../assets/avatar/hair/7/9.png'),
+  10: require('../../assets/avatar/hair/7/10.png'),
+};
+
+const noHairColors = {
+  1: require('../../assets/avatar/hair/8/1.png'),
+  2: require('../../assets/avatar/hair/8/2.png'),
+  3: require('../../assets/avatar/hair/8/3.png'),
+  4: require('../../assets/avatar/hair/8/4.png'),
+  5: require('../../assets/avatar/hair/8/5.png')
+};
+
+export default function hair({ hairType, hairColor, skinColor }) {
 
   const [imageSource, setImageSource] = useState(hairImages[`hair${hairType}`]);
 
   useEffect(() => {
-    setImageSource(hairImages[`hair${hairType}`]);
+    if (hairType == 8) {
+      setImageSource(hairImages[`hair8`][`color${skinColor}`]);
+    } else {
+      setImageSource(hairImages[`hair${hairType}`]);
+    }
   }, [hairType]);
 
   useEffect(() => {
@@ -85,7 +146,18 @@ export default function hair({ hairType, hairColor }) {
         case 4:
           sourceURL = hair4colors[hairColor];
           break;
-
+        case 5:
+          sourceURL = hair5colors[hairColor];
+          break;
+        case 6:
+          sourceURL = hair6colors[hairColor];
+          break;
+        case 7:
+          sourceURL = hair7colors[hairColor];
+          break;
+        case 8:
+          sourceURL = noHairColors[skinColor];
+          break;
         default:
           break;
       }
@@ -93,7 +165,7 @@ export default function hair({ hairType, hairColor }) {
         setImageSource(sourceURL);
       }
     }
-  }, [hairColor]);
+  }, [hairColor, skinColor]);
 
   return <>
     <Image source={imageSource} resizeMode="contain" style={{

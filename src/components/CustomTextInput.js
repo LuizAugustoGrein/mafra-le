@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     inputView: {
         backgroundColor: "white",
         borderRadius: 10,
-        height: 50,
         margin: 8,
         alignItems: "center",
         borderColor: "black",
@@ -63,10 +62,11 @@ const styles = StyleSheet.create({
     TextInput: {
         color: "black",
         paddingLeft: 5,
-        paddingTop: 10,
+        paddingTop: 8,
+        paddingBottom: 8,
         marginLeft: 20,
         width: "100%",
-        fontSize: 23,
+        fontSize: 22,
         fontWeight: "300"
     },
     upperText: {

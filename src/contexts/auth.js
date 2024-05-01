@@ -82,7 +82,7 @@ function AuthProvider({children}) {
         }
     }
 
-    async function updateAvatar (avatarSkin, avatarEye, avatarHair, avatarHairColor) {
+    async function updateAvatar (avatarSkin, avatarEye, avatarHair, avatarHairColor, avatarEyebrow, avatarGlasses, avatarGlassesColor) {
         if (user.id && avatarSkin && avatarEye && avatarHairColor) {
             const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/users/save-avatar', {
                 registration_number: user.registration_number,
@@ -90,7 +90,10 @@ function AuthProvider({children}) {
                 avatar_skin: avatarSkin,
                 avatar_eye: avatarEye,
                 avatar_hair: avatarHair || 0,
-                avatar_hair_color: avatarHairColor
+                avatar_hair_color: avatarHairColor,
+                avatar_eyebrow: avatarEyebrow,
+                avatar_glasses: avatarGlasses,
+                avatar_glasses_color: avatarGlassesColor
             });
             if (response.data.success) {
                 setUser(response.data.user);
