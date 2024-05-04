@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, React } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Image, TouchableOpacity, ActivityIndicator, BackHandler } from 'react-native';
 import { useCallback, useEffect, useState, useContext } from 'react';
 import WelcomeDescription from '../components/WelcomeDescription';
 import * as ScreenOrientation from "expo-screen-orientation";
@@ -50,6 +50,20 @@ export default function QuestionPage () {
     }
   }, [pendingQuestions]);
 
+  useEffect(() => {
+    const backAction = () => {
+        BackHandler.exitApp();
+        return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   async function answerQuestion (resp) {
     if (responseRight) {
 
@@ -87,7 +101,9 @@ export default function QuestionPage () {
           </View>
           <View style={styles.contentColumn}>
             <Text style={{ fontSize: 25, fontWeight: 600, paddingBottom: 10 }}>{currentQuestion.title}</Text>
-            <Text style={{ fontSize: 18, fontWeight: 400 }}>{currentQuestion.description}</Text>
+            <ScrollView style={{ marginBottom: 60 }}>
+              <Text style={{ fontSize: 18, fontWeight: 400 }}>{currentQuestion.description}</Text>
+            </ScrollView>
             <TouchableOpacity onPress={() => { setCurrentStep(2) }} style={{ backgroundColor: currentQuestion.button_color, padding: 10, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }}>
               <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>Vamos lá</Text>
             </TouchableOpacity>
@@ -97,20 +113,20 @@ export default function QuestionPage () {
       {(currentStep == 2) &&
         <>
           <View style={styles.contentColumn}>
-            <Text style={{ fontSize: 18, fontWeight: 600, paddingBottom: 25, textAlign: 'center' }}>{currentQuestion.questions[0].question}</Text>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+            <Text style={{ fontSize: 18, fontWeight: 600, paddingBottom: 20, textAlign: 'center' }}>{currentQuestion.questions[0].question}</Text>
+            <ScrollView style={{ marginBottom: 60 }}>
               {currentQuestion.questions[0].answers.map((answer, index) => (
                 <TouchableOpacity 
                   onPress={() => { setResponseRight(answer.is_right); setResponse(answer.id); }}
                   key={index} 
                   style={[
-                    { backgroundColor: '#E5EFCC', padding: 10, borderRadius: 15, width: '45%', alignSelf: 'center', marginBottom: 20, borderWidth: 3, borderColor: '#E5EFCC' },
+                    { backgroundColor: '#E5EFCC', padding: 8, borderRadius: 15, width: '85%', alignSelf: 'center', marginBottom: 15, borderWidth: 3, borderColor: '#E5EFCC' },
                     (answer.id == response) ? { borderWidth: 3, borderColor: '#555'} : {}
                   ]}>
-                  <Text style={{ color: 'black', fontSize: 18, textAlign: 'center'}}>{answer.response}</Text>
+                  <Text style={{ color: 'black', fontSize: 16, textAlign: 'center'}}>{answer.response}</Text>
                 </TouchableOpacity>
               ))}
-            </View>
+            </ScrollView>
             
 
             <TouchableOpacity 
@@ -138,15 +154,15 @@ export default function QuestionPage () {
       {(currentStep == 3) &&
         <>
           <View style={styles.contentColumn}>
-            <Text style={{ fontSize: 35, fontWeight: 600, paddingTop: 30, paddingBottom: 50, textAlign: 'center', color: 'red' }}>RESPOSTA INCORRETA</Text>
-            <Text style={{ fontSize: 25, textAlign: 'center', width: '90%', alignSelf: 'center' }}>Não se preocupe, todos nós cometemos erros. O importante é aprender com eles e continuar tentando. Você está no caminho certo!</Text>
+            <Text style={{ fontSize: 30, fontWeight: 600, paddingTop: 20, paddingBottom: 30, textAlign: 'center', color: 'red' }}>RESPOSTA INCORRETA</Text>
+            <Text style={{ fontSize: 20, textAlign: 'center', width: '90%', alignSelf: 'center' }}>Não se preocupe, todos nós cometemos erros. O importante é aprender com eles e continuar tentando. Você está no caminho certo!</Text>
 
             <TouchableOpacity
               onPress={() => setCurrentStep(1)} 
               style={[
-                { backgroundColor: '#BD2F0A', padding: 15, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }
+                { backgroundColor: '#BD2F0A', padding: 10, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }
               ]}>
-              <Text style={{ color: 'white', fontSize: 25, fontWeight: 600, textAlign: 'center'}}>Tentar novamente</Text>
+              <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>Tentar novamente</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.imageColumn}>
@@ -183,7 +199,7 @@ export default function QuestionPage () {
                 { backgroundColor: '#BD2F0A', padding: 10, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }
               ]}>
                 {(loading) ?
-                  <ActivityIndicator size="small" color="white" style={{ padding: 5 }} />
+                  <ActivityIndicator size="small" color="white" style={{ padding: 2 }} />
                   :
                   <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>Continuar</Text>
                 }

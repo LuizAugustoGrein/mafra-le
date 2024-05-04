@@ -28,22 +28,10 @@ export default function App() {
           <Stack.Screen name={"EnterFormPage"} component={EnterFormPage} />
           <Stack.Screen name={"AvatarPage"} component={AvatarPage} />
           <Stack.Screen name={"NamePage"} component={NamePage} />
-          <Stack.Screen name={"QuestionPage"} component={QuestionPage} />
+          <Stack.Screen name={"QuestionPage"} component={QuestionPage} options={{ headerLeft: null }} />
           <Stack.Screen name={"CompletionPage"} component={CompletionPage} />
         </Stack.Navigator>
       </AuthProvider>
     </NavigationContainer>
-    // <View style={styles.container}>
-    //   <LinearGradient
-    //     colors={['rgba(142,29,27,1)', 'rgba(59,34,38,1)', 'rgba(59,34,38,1)', 'rgba(142,29,27,1)']}
-    //     style={styles.main}
-    //     start={[0, 1]}
-    //     end={[0, 0]}
-    //   >
-    //     {/* <EnterFormPage></EnterFormPage> */}
-    //     <HomePage></HomePage>
-       
-    //   </LinearGradient>
-    // </View>
   );
 }

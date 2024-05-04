@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, React } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, React, ImageBackground } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, TouchableOpacity } from 'react-native';
 import { useCallback, useEffect, useState, useContext } from 'react';
@@ -412,16 +412,18 @@ export default function AvatarPage () {
             }
         </View>
         <View style={styles.previewSection}>
-          {hairType == 2 &&
-            <Hair hairType={hairType} hairColor={hairColor} skinColor={skinColor}></Hair>
-          }
-          <SkinColor skinOption={skinColor}></SkinColor>
-          <Eyebrow eyebrowColor={eyebrowColor} ></Eyebrow>
-          {hairType != 2 &&
-            <Hair hairType={hairType} hairColor={hairColor} skinColor={skinColor}></Hair>
-          }
-          <Eyes eyeColor={eyeColor} ></Eyes>
-          <Glasses glassesType={glassesType} glassesColor={glassesColor} ></Glasses>
+          <ImageBackground source={require('../../assets/avatar/avatar-background.jpeg')} style={styles.imageBackAvatar} imageStyle={{ borderRadius: 15 }}>
+            {hairType == 2 &&
+              <Hair hairType={hairType} hairColor={hairColor} skinColor={skinColor}></Hair>
+            }
+            <SkinColor skinOption={skinColor}></SkinColor>
+            <Eyebrow eyebrowColor={eyebrowColor} ></Eyebrow>
+            {hairType != 2 &&
+              <Hair hairType={hairType} hairColor={hairColor} skinColor={skinColor}></Hair>
+            }
+            <Eyes eyeColor={eyeColor} ></Eyes>
+            <Glasses glassesType={glassesType} glassesColor={glassesColor} ></Glasses>
+          </ImageBackground>
         </View>
       </LinearGradient>
     </View>
@@ -472,8 +474,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#B37E7E',
         borderWidth: 4,
         borderColor: 'white',
-        borderRadius: 20,
-        position: 'relative'
+        borderRadius: 20
+    },
+    imageBackAvatar: {
+      flex: 1,
+      position: 'relative'
     },
     choseOptionTitle: {
         backgroundColor: 'white',
