@@ -1,9 +1,6 @@
-import { StyleSheet, Text, View, ScrollView, React } from 'react-native';
-import { Image, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useCallback, useEffect, useState, useContext } from 'react';
+import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
+import { useCallback } from 'react';
 import * as ScreenOrientation from "expo-screen-orientation";
-import { LinearGradient } from 'expo-linear-gradient';
-
 import { useFocusEffect } from '@react-navigation/native';
 
 export default function CompletionPage () {
@@ -22,42 +19,73 @@ export default function CompletionPage () {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={['rgba(129, 170, 83,1)', 'rgba(129, 170, 83,1)', 'rgba(255, 255, 255,1)', 'rgba(255, 255, 255,1)']}
-        style={styles.main}
-        start={[0, 1]}
-        end={[0, 0]}
+      <ImageBackground
+        source={require('../static/finished-back.png')}
+        style={styles.image}
+        resizeMode="cover"
       >
-        <View style={styles.imageColumn}>
-          <Image
-              source={require('../static/finished.png')}
-              resizeMode='contain'
-              style={{
-                height: '100%',
-                width: '100%'
-              }}
-          />
+        <View style={styles.upperTextView}>
+          <Text style={styles.upperText}>Parabéns, você se tornou o melhor de Mafra!</Text>
         </View>
-      </LinearGradient>
+        <View style={styles.textView}>
+          <Text style={styles.text}>Nos vemos em breve, prontos para novas jornadas!</Text>
+        </View>
+        <View style={styles.imageView}>
+          <Image source={require('../static/best-reader-logo.png')} />
+        </View>
+      </ImageBackground>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  main: {
-    flex: 1
-  },
   container: {
     flex: 1,
-    backgroundColor: 'rgb(142,29,27)',
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
-  imageColumn: {
-      flex: 1
+  image: {
+    flex: 1,
+    justifyContent: 'flex-end',
   },
-  contentColumn: {
-      flex: 0.7,
-      backgroundColor: 'white',
-      padding: 25
+  upperTextView: {
+    position: 'absolute',
+    top: 60,
+    left: 0,
+    width: '65%',
+    alignItems: 'center',
+    paddingLeft: '5%',
+    paddingRight: '5%',
+  },
+  upperText: {
+    textAlign: 'center',
+    color: '#FEAB00',
+    fontSize: 30,
+    fontWeight: 'bold',
+    textShadowColor: '#7F5600',
+    textShadowOffset: { width: -2, height: 2 },
+    textShadowRadius: 1,
+  },
+  textView: {
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    color: '#FEAB00',
+    fontSize: 25,
+    fontWeight: 'bold',
+    bottom: 30,
+    textShadowColor: '#7F5600',
+    textShadowOffset: { width: -2, height: 2 },
+    textShadowRadius: 1,
+  },
+  imageView: {
+    position: 'absolute',
+    top: 50,
+    right: 0,
+    width: '35%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
   }
 });
