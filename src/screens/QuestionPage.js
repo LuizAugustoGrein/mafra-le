@@ -1,9 +1,15 @@
-import { StyleSheet, Text, View, ScrollView, React } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, React, ImageBackground } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, TouchableOpacity, ActivityIndicator, BackHandler } from 'react-native';
 import { useCallback, useEffect, useState, useContext } from 'react';
 import WelcomeDescription from '../components/WelcomeDescription';
 import * as ScreenOrientation from "expo-screen-orientation";
+
+import SkinColor from '../avatar/SkinColor';
+import Hair from '../avatar/Hair';
+import Eyes from '../avatar/Eyes';
+import Eyebrow from '../avatar/Eyebrow';
+import Glasses from '../avatar/Glasses';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -24,7 +30,7 @@ export default function QuestionPage () {
 
   const [loading, setLoading] = useState(false);
 
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
 
   const navigation = useNavigation();
 
@@ -87,6 +93,44 @@ export default function QuestionPage () {
 
   return (
     <View style={styles.container}>
+      {(currentStep == 0) &&
+        <>
+          <View style={styles.container}>
+            <ImageBackground
+              source={require('../../assets/avatar/book-choice-background.png')}
+              style={styles.imageBg}
+              resizeMode="cover"
+            >
+              <View style={styles.previewSection}>
+                  {user.avatar_hair == 2 &&
+                    <Hair hairType={user.avatar_hair} hairColor={user.avatar_hair_color} skinColor={user.avatar_skin}></Hair>
+                  }
+                  <SkinColor skinOption={user.avatar_skin}></SkinColor>
+                  <Eyebrow eyebrowColor={user.avatar_eyebrow} ></Eyebrow>
+                  {user.avatar_hair != 2 &&
+                    <Hair hairType={user.avatar_hair} hairColor={user.avatar_hair_color} skinColor={user.avatar_skin}></Hair>
+                  }
+                  <Eyes eyeColor={user.avatar_eye} ></Eyes>
+                  <Glasses glassesType={user.avatar_glasses} glassesColor={user.avatar_glasses_color} ></Glasses>
+              </View>
+              <Image
+                source={{ uri: currentQuestion.left_image }}
+                style={{
+                  width: 70,
+                  height: 100,
+                  position: 'absolute',
+                  top: '35%',
+                  left: '65%',
+                  transform: [{ rotate: '-15deg' }]
+                }}
+              />
+              <TouchableOpacity onPress={() => { setCurrentStep(1) }} style={{ backgroundColor: 'green', padding: 10, borderRadius: 15, position: 'absolute', bottom: 30, marginLeft: 30, marginRight: 25, width: '40%', alignSelf: 'left'  }}>
+                <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>Continuar</Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </View>
+        </>
+      }
       {(currentStep == 1) &&
         <>
           <View style={styles.imageColumn}>
@@ -190,7 +234,7 @@ export default function QuestionPage () {
                   if (pendingQuestions[0].questions.length > 1) {
                     setCurrentStep(2);
                   } else {
-                    setCurrentStep(1);
+                    setCurrentStep(0);
                   }
                   setLoading(false);
                 }, 250); 
@@ -227,6 +271,10 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgb(142,29,27)',
       flexDirection: 'row',
     },
+    imageBg: {
+      flex: 1,
+      position: 'relative'
+    },
     imageColumn: {
         flex: 0.3,
     },
@@ -234,5 +282,9 @@ const styles = StyleSheet.create({
         flex: 0.7,
         backgroundColor: 'white',
         padding: 25
+    },
+    previewSection: {
+      height: '100%',
+      marginLeft: 150
     }
 });

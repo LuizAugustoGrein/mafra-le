@@ -54,6 +54,7 @@ function AuthProvider({children}) {
                 });
                 if (response.data.success) {
                     setUser(response.data.user);
+                    console.log(user);
                     if (!response.data.user.avatar_skin) {
                         navigation.navigate('AvatarPage');
                     } else if (!response.data.user.name) {
