@@ -14,8 +14,7 @@ function AuthProvider({children}) {
 
     async function updatePendingQuestions () {
         const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/books/get-questions', {
-            registration_number: user.registration_number,
-            class: user.class
+            registration_number: user.registration_number
         });
         if (response.data.finished) {
             navigation.navigate('CompletionPage');
@@ -24,41 +23,35 @@ function AuthProvider({children}) {
         }
     }
          
-    async function verifyLogin (registrationNumber = null, schoolClass = null) {
+    async function verifyLogin (registrationNumber = null) {
         // await AsyncStorage.removeItem('registrationNumber');
-        // await AsyncStorage.removeItem('schoolClass');
-        if (registrationNumber && schoolClass) {
+        if (registrationNumber) {
             const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/users/login', {
-                registration_number: registrationNumber,
-                class: schoolClass
+                registration_number: registrationNumber
             });
             if (response.data.success) {
                 setUser(response.data.user);
                 await AsyncStorage.setItem('registrationNumber', registrationNumber);
-                await AsyncStorage.setItem('schoolClass', schoolClass.toString());
                 if (!response.data.user.avatar_skin) {
                     navigation.navigate('AvatarPage');
-                } else if (!response.data.user.name) {
-                    navigation.navigate('NamePage');
                 } else {
                     navigation.navigate('QuestionPage');
+                }
+            } else {
+                return {
+                    error: true
                 }
             }
         } else {
             const storageRegistrationNumber = await AsyncStorage.getItem('registrationNumber');
-            const storageSchoolClass = await AsyncStorage.getItem('schoolClass');
-            if (storageRegistrationNumber && storageSchoolClass) {
+            if (storageRegistrationNumber) {
                 const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/users/login', {
-                    registration_number: storageRegistrationNumber,
-                    class: Number(storageSchoolClass)
+                    registration_number: storageRegistrationNumber
                 });
                 if (response.data.success) {
                     setUser(response.data.user);
-                    console.log(user);
                     if (!response.data.user.avatar_skin) {
                         navigation.navigate('AvatarPage');
-                    } else if (!response.data.user.name) {
-                        navigation.navigate('NamePage');
                     } else {
                         navigation.navigate('QuestionPage');
                     }
@@ -87,7 +80,6 @@ function AuthProvider({children}) {
         if (user.id && avatarSkin && avatarEye && avatarHairColor) {
             const response = await axios.post('https://luizgrein.com/projects/mafra-le/api/users/save-avatar', {
                 registration_number: user.registration_number,
-                class: user.class,
                 avatar_skin: avatarSkin,
                 avatar_eye: avatarEye,
                 avatar_hair: avatarHair || 0,
@@ -98,7 +90,6 @@ function AuthProvider({children}) {
             });
             if (response.data.success) {
                 setUser(response.data.user);
-                navigation.navigate('NamePage');
             }
         }
     }

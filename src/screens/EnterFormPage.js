@@ -21,7 +21,8 @@ export default function EnterFormPage () {
   const { verifyLogin } = useContext(AuthContext);
 
   const [registrationNumber, setRegistrationNumber] = useState();
-  const [schoolClass, setSchoolClass] = useState();
+
+  const [error, setError] = useState();
 
   const [isFormOK, setIsFormOK] = useState(false);
 
@@ -34,7 +35,12 @@ export default function EnterFormPage () {
   }
 
   async function login () {
-    verifyLogin(registrationNumber, schoolClass);
+    var loginResult = await verifyLogin(registrationNumber);
+    if (loginResult && loginResult.error) {
+      setError('Nº de matrícula incorreto.');
+    } else {
+      setError(null);
+    }
   }
 
   useFocusEffect(
@@ -44,12 +50,13 @@ export default function EnterFormPage () {
   );
 
   useEffect(() => {
-    if (registrationNumber && registrationNumber.length == 8 && schoolClass) {
+    setError(null);
+    if (registrationNumber && registrationNumber.length == 8) {
       setIsFormOK(true);
     } else {
       setIsFormOK(false);
     }
-  }, [registrationNumber, schoolClass]);
+  }, [registrationNumber]);
 
   return (
     <ScrollView style={styles.container}>
@@ -65,32 +72,10 @@ export default function EnterFormPage () {
         <WelcomeDescription text="Ele será utilizado para salvar seu progresso durante toda a nossa jornada."></WelcomeDescription>
 
         <View style={{marginTop: 30, marginHorizontal: '10%'}}>
-          <CustomTextInput placeholder={'Ex: 12345678'} upperText="Nº da matrícula:" state={registrationNumber} setState={setRegistrationNumber} maxLength={8} keyboardType={'numeric'}></CustomTextInput>
-
-          <Text style={styles.upperText}>Série:</Text>
-          <SelectDropdown
-            data={selectOptions}
-            defaultValueByIndex={0}
-            disabledIndexs={[0]}
-            buttonStyle={{
-              width: 'calc(100% - 16)',
-              margin: 8,
-              borderRadius: 10,
-              margin: 8,
-              alignItems: "center",
-              borderColor: "black",
-              borderWidth: 1
-            }}
-            onSelect={(selectedItem, index) => {
-              setSchoolClass(index);
-            }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              return selectedItem
-            }}
-            rowTextForSelection={(item, index) => {
-              return item;
-            }}
-          />
+          <CustomTextInput placeholder={'Ex: 12345678'} upperText="Nº de matrícula:" state={registrationNumber} setState={setRegistrationNumber} maxLength={8} keyboardType={'numeric'}></CustomTextInput>
+          {error &&
+            <Text style={{ color: 'red', fontSize: 16, textAlign: 'center', fontWeight: 800, paddingTop: 10 }}>{error}</Text>
+          }
 
           <CustomButton text="Confirmar" action={() => login()} disabled={!isFormOK}></CustomButton>
         </View>
