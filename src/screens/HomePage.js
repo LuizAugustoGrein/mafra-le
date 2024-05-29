@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, BackHandler } from 'react-native';
+import { useEffect } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
@@ -26,6 +27,20 @@ export default function HomePage () {
       lockOrientation();
     }, [])
   );
+
+  useEffect(() => {
+    const backAction = () => {
+        BackHandler.exitApp();
+        return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <ScrollView style={styles.container}>

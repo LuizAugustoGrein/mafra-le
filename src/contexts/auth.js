@@ -90,6 +90,7 @@ function AuthProvider({children}) {
             });
             if (response.data.success) {
                 setUser(response.data.user);
+                navigation.navigate('QuestionPage');
             }
         }
     }

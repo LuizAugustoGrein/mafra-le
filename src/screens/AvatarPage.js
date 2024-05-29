@@ -367,6 +367,7 @@ export default function AvatarPage () {
                     <Text style={styles.confirmButtonText}>Voltar</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.confirmButtonHalf]} onPress={() => {
+                    console.log('aqui');
                     if (glassesType == 0) {
                       updateAvatar(skinColor, eyeColor, hairType, hairColor, eyebrowColor, glassesType, glassesColor);
                     } else {
@@ -404,7 +405,9 @@ export default function AvatarPage () {
                   <TouchableOpacity style={[styles.backButtonHalf]} onPress={() => { setStep(step - 1); }}>
                     <Text style={styles.confirmButtonText}>Voltar</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={[styles.confirmButtonHalf]} onPress={() => { updateAvatar(skinColor, eyeColor, hairType, hairColor, eyebrowColor, glassesType, glassesColor); }}>
+                  <TouchableOpacity style={[styles.confirmButtonHalf]} onPress={() => { 
+                    updateAvatar(skinColor, eyeColor, hairType, hairColor, eyebrowColor, glassesType, glassesColor); 
+                  }}>
                     <Text style={styles.confirmButtonText}>Confirmar</Text>
                   </TouchableOpacity>
                 </View>
