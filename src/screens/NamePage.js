@@ -54,7 +54,7 @@ export default function NamePage () {
             <Text style={styles.title}>Como você se chama?</Text>
             <View style={styles.nameForm}>
                 <CustomTextInput placeholder={'Seu nome completo.'} state={name} setState={setName} maxLength={100} ></CustomTextInput>
-                <CustomButton text="Confirmar" action={() => updateName(name)} disabled={!isFormOK} ></CustomButton>
+                <CustomButton text="CONFIRMAR" action={() => updateName(name)} disabled={!isFormOK} ></CustomButton>
             </View>
         </LinearGradient>
         </View>

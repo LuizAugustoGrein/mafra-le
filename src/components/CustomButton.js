@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 20,
-    marginTop: 40
+    marginTop: 30
   },
   primaryButtonText: {
     color: 'white',

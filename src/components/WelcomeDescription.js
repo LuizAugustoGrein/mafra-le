@@ -9,8 +9,8 @@ export default function WelcomeDescription({text}) {
 const styles = StyleSheet.create({
     welcomeDescription: {
         color: 'white',
-        fontSize: 20,
+        fontSize: 18,
         textAlign: 'center',
-        padding: 10
+        padding: 8
     }
 });

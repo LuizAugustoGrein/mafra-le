@@ -12,7 +12,7 @@ export default function LogoImage () {
 const styles = StyleSheet.create({
     logoImage: {
         width: 100,
-        height: 100,
+        height: 90,
         alignSelf: 'center',
         marginBottom: 30
     },

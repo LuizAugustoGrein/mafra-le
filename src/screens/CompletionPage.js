@@ -25,10 +25,10 @@ export default function CompletionPage () {
         resizeMode="cover"
       >
         <View style={styles.upperTextView}>
-          <Text style={styles.upperText}>Parabéns, você se tornou o melhor de Mafra!</Text>
+          <Text style={styles.upperText}>PARABÉNS, VOCÊ SE TORNOU O MELHOR DE MAFRA!</Text>
         </View>
         <View style={styles.textView}>
-          <Text style={styles.text}>Nos vemos em breve, prontos para novas jornadas!</Text>
+          <Text style={styles.text}>NOS VEMOS EM BREVE, PRONTOS PARA NOVAS JORNADAS!</Text>
         </View>
         <View style={styles.imageView}>
           <Image source={require('../static/best-reader-logo.png')} />

@@ -69,13 +69,13 @@ export default function AvatarPage () {
         end={[0, 0]}
       >
         <View style={styles.optionsSection}>
-            <WelcomeDescription text="Já começaremos a nossa grande aventura, mas primeiro, como você se parece?"></WelcomeDescription>
+            <WelcomeDescription text="JÁ COMEÇAREMOS A NOSSA GRANDE AVENTURA, MAS PRIMEIRO, COMO VOCÊ SE PARECE?"></WelcomeDescription>
 
             {/*****          TOM DE PELE          ****/}
             {step == 1 &&
               <>
                 <View style={styles.choseOptionTitle}>
-                  <Text style={styles.choseOptionTitleText}>Tom de pele</Text>
+                  <Text style={styles.choseOptionTitleText}>TOM DE PELE</Text>
                 </View>
                 <ScrollView style={styles.choseOptionScroll}>
                   <View style={styles.choseOptionContent}>
@@ -88,7 +88,7 @@ export default function AvatarPage () {
                 </ScrollView>
 
                 <TouchableOpacity style={[styles.confirmButton]} onPress={() => { setStep(2); }}>
-                  <Text style={styles.confirmButtonText}>Continuar</Text>
+                  <Text style={styles.confirmButtonText}>CONTINUAR</Text>
                 </TouchableOpacity>
               </>
             }
@@ -97,7 +97,7 @@ export default function AvatarPage () {
             {step == 2 &&
               <>
                 <View style={styles.choseOptionTitle}>
-                  <Text style={styles.choseOptionTitleText}>Cor dos olhos</Text>
+                  <Text style={styles.choseOptionTitleText}>COR DOS OLHOS</Text>
                 </View>
                 <ScrollView style={styles.choseOptionScroll}>
                   <View style={styles.choseOptionContent}>
@@ -116,10 +116,10 @@ export default function AvatarPage () {
 
                 <View style={{ display: 'flex', flexDirection: 'row', marginRight: 40 }}>
                   <TouchableOpacity style={[styles.backButtonHalf]} onPress={() => { setStep(1); }}>
-                    <Text style={styles.confirmButtonText}>Voltar</Text>
+                    <Text style={styles.confirmButtonText}>VOLTAR</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.confirmButtonHalf]} onPress={() => { setStep(3); }}>
-                    <Text style={styles.confirmButtonText}>Continuar</Text>
+                    <Text style={styles.confirmButtonText}>CONTINUAR</Text>
                   </TouchableOpacity>
                 </View>
               </>
@@ -129,7 +129,7 @@ export default function AvatarPage () {
             {step == 3 &&
               <>
                 <View style={styles.choseOptionTitle}>
-                  <Text style={styles.choseOptionTitleText}>Tipo de cabelo</Text>
+                  <Text style={styles.choseOptionTitleText}>TIPO DE CABELO</Text>
                 </View>
                 <ScrollView style={styles.choseOptionScroll}>
                   <View style={styles.choseOptionContent}>
@@ -236,7 +236,7 @@ export default function AvatarPage () {
 
                 <View style={{ display: 'flex', flexDirection: 'row', marginRight: 40 }}>
                   <TouchableOpacity style={[styles.backButtonHalf]} onPress={() => { setStep(2); }}>
-                    <Text style={styles.confirmButtonText}>Voltar</Text>
+                    <Text style={styles.confirmButtonText}>VOLTAR</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.confirmButtonHalf]} onPress={() => {
                     if (hairType == 8) {
@@ -245,7 +245,7 @@ export default function AvatarPage () {
                       setStep(4);
                     }
                   }}>
-                    <Text style={styles.confirmButtonText}>Continuar</Text>
+                    <Text style={styles.confirmButtonText}>CONTINUAR</Text>
                   </TouchableOpacity>
                 </View>
               </>
@@ -255,7 +255,7 @@ export default function AvatarPage () {
             {step == 4 &&
               <>
                 <View style={styles.choseOptionTitle}>
-                  <Text style={styles.choseOptionTitleText}>Cor do cabelo</Text>
+                  <Text style={styles.choseOptionTitleText}>COR DO CABELO</Text>
                 </View>
                 <ScrollView style={styles.choseOptionScroll}>
                   <View style={styles.choseOptionContent}>
@@ -274,10 +274,10 @@ export default function AvatarPage () {
 
                 <View style={{ display: 'flex', flexDirection: 'row', marginRight: 40 }}>
                   <TouchableOpacity style={[styles.backButtonHalf]} onPress={() => { setStep(3); }}>
-                    <Text style={styles.confirmButtonText}>Voltar</Text>
+                    <Text style={styles.confirmButtonText}>VOLTAR</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.confirmButtonHalf]} onPress={() => { setStep(5) }}>
-                    <Text style={styles.confirmButtonText}>Continuar</Text>
+                    <Text style={styles.confirmButtonText}>CONTINUAR</Text>
                   </TouchableOpacity>
                 </View>
               </>
@@ -287,7 +287,7 @@ export default function AvatarPage () {
             {step == 5 &&
               <>
                 <View style={styles.choseOptionTitle}>
-                  <Text style={styles.choseOptionTitleText}>Cor da sobrancelha</Text>
+                  <Text style={styles.choseOptionTitleText}>COR DA SOBRANCELHA</Text>
                 </View>
                 <ScrollView style={styles.choseOptionScroll}>
                   <View style={styles.choseOptionContent}>
@@ -312,10 +312,10 @@ export default function AvatarPage () {
                       setStep(4);
                     }
                   }}>
-                    <Text style={styles.confirmButtonText}>Voltar</Text>
+                    <Text style={styles.confirmButtonText}>VOLTAR</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.confirmButtonHalf]} onPress={() => { setStep(6) }}>
-                    <Text style={styles.confirmButtonText}>Continuar</Text>
+                    <Text style={styles.confirmButtonText}>CONTINUAR</Text>
                   </TouchableOpacity>
                 </View>
               </>
@@ -325,7 +325,7 @@ export default function AvatarPage () {
             {step == 6 &&
               <>
                 <View style={styles.choseOptionTitle}>
-                  <Text style={styles.choseOptionTitleText}>Óculos</Text>
+                  <Text style={styles.choseOptionTitleText}>ÓCULOS</Text>
                 </View>
                 <ScrollView style={styles.choseOptionScroll}>
                   <View style={styles.choseOptionContent}>
@@ -364,7 +364,7 @@ export default function AvatarPage () {
 
                 <View style={{ display: 'flex', flexDirection: 'row', marginRight: 40 }}>
                   <TouchableOpacity style={[styles.backButtonHalf]} onPress={() => { setStep(step - 1); }}>
-                    <Text style={styles.confirmButtonText}>Voltar</Text>
+                    <Text style={styles.confirmButtonText}>VOLTAR</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.confirmButtonHalf]} onPress={() => {
                     console.log('aqui');
@@ -374,7 +374,7 @@ export default function AvatarPage () {
                       setStep(7);
                     }
                   }}>
-                    <Text style={styles.confirmButtonText}>Confirmar</Text>
+                    <Text style={styles.confirmButtonText}>CONFIRMAR</Text>
                   </TouchableOpacity>
                 </View>
               </>
@@ -384,7 +384,7 @@ export default function AvatarPage () {
             {step == 7 &&
               <>
                 <View style={styles.choseOptionTitle}>
-                  <Text style={styles.choseOptionTitleText}>Cor do óculos</Text>
+                  <Text style={styles.choseOptionTitleText}>COR DO ÓCULOS</Text>
                 </View>
                 <ScrollView style={styles.choseOptionScroll}>
                   <View style={styles.choseOptionContent}>
@@ -403,12 +403,12 @@ export default function AvatarPage () {
 
                 <View style={{ display: 'flex', flexDirection: 'row', marginRight: 40 }}>
                   <TouchableOpacity style={[styles.backButtonHalf]} onPress={() => { setStep(step - 1); }}>
-                    <Text style={styles.confirmButtonText}>Voltar</Text>
+                    <Text style={styles.confirmButtonText}>VOLTAR</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.confirmButtonHalf]} onPress={() => { 
                     updateAvatar(skinColor, eyeColor, hairType, hairColor, eyebrowColor, glassesType, glassesColor); 
                   }}>
-                    <Text style={styles.confirmButtonText}>Confirmar</Text>
+                    <Text style={styles.confirmButtonText}>CONFIRMAR</Text>
                   </TouchableOpacity>
                 </View>
               </>

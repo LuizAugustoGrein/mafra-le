@@ -37,7 +37,7 @@ export default function EnterFormPage () {
   async function login () {
     var loginResult = await verifyLogin(registrationNumber);
     if (loginResult && loginResult.error) {
-      setError('Nº de matrícula incorreto.');
+      setError('Nº DE MATRÍCULA INCORRETO.');
     } else {
       setError(null);
     }
@@ -68,16 +68,16 @@ export default function EnterFormPage () {
       >
         <LogoImage></LogoImage>
 
-        <WelcomeDescription text="Mas antes de tudo, vamos precisar do seu número de matrícula e série que está inserido atualmente."></WelcomeDescription>
-        <WelcomeDescription text="Ele será utilizado para salvar seu progresso durante toda a nossa jornada."></WelcomeDescription>
+        <WelcomeDescription text="MAS ANTES DE TUDO, VAMOS PRECISAR DO SEU NÚMERO DE MATRÍCULA."></WelcomeDescription>
+        <WelcomeDescription text="ELE SERÁ UTILIZADO PARA SALVAR SEU PROGRESSO DURANTE TODA A NOSSA JORNADA."></WelcomeDescription>
 
         <View style={{marginTop: 30, marginHorizontal: '10%'}}>
-          <CustomTextInput placeholder={'Ex: 12345678'} upperText="Nº de matrícula:" state={registrationNumber} setState={setRegistrationNumber} maxLength={8} keyboardType={'numeric'}></CustomTextInput>
+          <CustomTextInput placeholder={'EX: 12345678'} upperText="Nº DE MATRÍCULA:" state={registrationNumber} setState={setRegistrationNumber} maxLength={8} keyboardType={'numeric'}></CustomTextInput>
           {error &&
             <Text style={{ color: 'red', fontSize: 16, textAlign: 'center', fontWeight: 800, paddingTop: 10 }}>{error}</Text>
           }
 
-          <CustomButton text="Confirmar" action={() => login()} disabled={!isFormOK}></CustomButton>
+          <CustomButton text="CONFIRMAR" action={() => login()} disabled={!isFormOK}></CustomButton>
         </View>
       </LinearGradient>
     </ScrollView>

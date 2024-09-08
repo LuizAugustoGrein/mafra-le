@@ -52,21 +52,21 @@ export default function HomePage () {
       >
         <LogoImage></LogoImage>
 
-        <Text style={styles.welcomeTitle}>Bem-vindo ao</Text>
+        <Text style={styles.welcomeTitle}>BEM-VINDO AO</Text>
 
         <View style={styles.appNameWelcome}>
-          <Text style={[styles.welcomeTitle, styles.welcomeTitleColoredOne]}>Mafra</Text>
-          <Text style={[styles.welcomeTitle, styles.welcomeTitleColoredTwo]}> Lê</Text>
+          <Text style={[styles.welcomeTitle, styles.welcomeTitleColoredOne]}>MAFRA</Text>
+          <Text style={[styles.welcomeTitle, styles.welcomeTitleColoredTwo]}> LÊ</Text>
         </View>
 
-        <WelcomeDescription text="Sua porta de entrada para um universo de leitura e conhecimento!"></WelcomeDescription>
-        <WelcomeDescription text="Abra as páginas virtuais e mergulhe em um oceano de aventuras."></WelcomeDescription>
-        <WelcomeDescription text="Está pronto para desbravar Mafra e se tornar o melhor leitor?"></WelcomeDescription>
-        <WelcomeDescription text="Vamos juntos nessa jornada literária de descobertas e ampliação de horizontes!"></WelcomeDescription>
+        <WelcomeDescription text="SUA PORTA DE ENTRADA PARA UM UNIVERSO DE LEITURA E CONHECIMENTO!"></WelcomeDescription>
+        <WelcomeDescription text="ABRA AS PÁGINAS VIRTUAIS E MERGULHE EM UM OCEANO DE AVENTURAS."></WelcomeDescription>
+        <WelcomeDescription text="ESTÁ PRONTO PARA DESBRAVAR MAFRA E SE TORNAR O MELHOR LEITOR?"></WelcomeDescription>
+        <WelcomeDescription text="VAMOS JUNTOS NESSA JORNADA LITERÁRIA DE DESCOBERTAS E AMPLIAÇÃO DE HORIZONTES!"></WelcomeDescription>
 
-        <Text style={styles.confirmationText}>Você está pronto?</Text>
+        <Text style={styles.confirmationText}>VOCÊ ESTÁ PRONTO?</Text>
 
-        <CustomButton text="Estou Pronto!" action={() => { navigation.navigate('EnterFormPage'); }}></CustomButton>
+        <CustomButton text="ESTOU PRONTO!" action={() => { navigation.navigate('EnterFormPage'); }}></CustomButton>
       </LinearGradient>
     </ScrollView>
   );
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
       fontSize: 30,
       textAlign: 'center',
       fontWeight: '700',
-      marginTop: 30
+      marginTop: 20
     },
     container: {
       flex: 1,

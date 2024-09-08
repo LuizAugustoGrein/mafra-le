@@ -30,7 +30,7 @@ export default function QuestionPage () {
 
   const [loading, setLoading] = useState(false);
 
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(-1);
 
   const navigation = useNavigation();
 
@@ -93,6 +93,121 @@ export default function QuestionPage () {
 
   return (
     <View style={styles.container}>
+      {(currentStep == -1) &&
+        <>
+          <View style={{ flex: 1 }}>
+            <LinearGradient
+              colors={['#A10000', '#FE0001', '#A10000']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{ flex: 1 }}
+            >
+              <View style={{
+                position: 'absolute',
+                top: 120,
+                left: 20,
+                flexDirection: 'column'
+              }}>
+                <Image
+                  source={require('../../assets/coracao.png')}
+                  style={{
+                    width: 80,
+                    height: 73,
+                    marginBottom: 40
+                  }}
+                />
+                <Image
+                  source={require('../../assets/coracao.png')}
+                  style={{
+                    width: 80,
+                    height: 73
+                  }}
+                />
+              </View>
+
+              <View style={{
+                position: 'absolute',
+                top: 120,
+                right: 20,
+                flexDirection: 'column'
+              }}>
+                <Image
+                  source={require('../../assets/coracao.png')}
+                  style={{
+                    width: 80,
+                    height: 73,
+                    marginBottom: 40
+                  }}
+                />
+                <Image
+                  source={require('../../assets/coracao.png')}
+                  style={{
+                    width: 80,
+                    height: 73
+                  }}
+                />
+              </View>
+
+              <View style={{
+                flex: 1,
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                paddingTop: 20
+              }}>
+                <Text style={{
+                  color: 'white',
+                  fontSize: 25,
+                  paddingHorizontal: 20,
+                  textAlign: 'center'
+                }}>
+                  PARA UMA EXPERIÊNCIA MAIS FELIZ E ACOLHEDORA, CHAME SEUS PAIS, TIOS OU AVÓS PARA LER COM VOCÊ.
+                </Text>
+              </View>
+
+              <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+                <Text style={{
+                  color: 'white',
+                  fontSize: 30,
+                  paddingHorizontal: 80,
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  textShadowColor: 'black',
+                  textShadowOffset: { width: -1, height: 1 },
+                  textShadowRadius: 1
+                }}>
+                  O AMOR DE UMA FAMÍLIA É O MAIOR PRESENTE DA VIDA.
+                </Text>
+              </View>
+
+              <View style={{
+                flex: 1,
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                paddingBottom: 30
+              }}>
+                <TouchableOpacity style={{
+                  backgroundColor: 'white',
+                  paddingVertical: 15,
+                  paddingHorizontal: 30,
+                  borderRadius: 15
+                }}
+                onPress={() => { setCurrentStep(0) }}
+                >
+                  <Text style={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    color: '#A10000'
+                  }}>INICIAR PERGUNTAS</Text>
+                </TouchableOpacity>
+              </View>
+            </LinearGradient>
+          </View>
+        </>
+      }
       {(currentStep == 0) &&
         <>
           <View style={styles.container}>
@@ -125,7 +240,7 @@ export default function QuestionPage () {
                 }}
               />
               <TouchableOpacity onPress={() => { setCurrentStep(1) }} style={{ backgroundColor: 'green', padding: 10, borderRadius: 15, position: 'absolute', bottom: 30, marginLeft: 30, marginRight: 25, width: '40%', alignSelf: 'left'  }}>
-                <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>Continuar</Text>
+                <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>CONTINUAR</Text>
               </TouchableOpacity>
             </ImageBackground>
           </View>
@@ -149,7 +264,7 @@ export default function QuestionPage () {
               <Text style={{ fontSize: 18, fontWeight: 400 }}>{currentQuestion.description}</Text>
             </ScrollView>
             <TouchableOpacity onPress={() => { setCurrentStep(2) }} style={{ backgroundColor: currentQuestion.button_color, padding: 10, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }}>
-              <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>Vamos lá</Text>
+              <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>VAMOS LÁ</Text>
             </TouchableOpacity>
           </View>
         </>
@@ -180,7 +295,7 @@ export default function QuestionPage () {
                 { backgroundColor: '#BD2F0A', padding: 10, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  },
                 (!response) ? { backgroundColor: '#b85f67' } : {}
               ]}>
-              <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>Confirmar</Text>
+              <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>CONFIRMAR</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.imageColumn}>
@@ -199,14 +314,14 @@ export default function QuestionPage () {
         <>
           <View style={styles.contentColumn}>
             <Text style={{ fontSize: 30, fontWeight: 600, paddingTop: 20, paddingBottom: 30, textAlign: 'center', color: 'red' }}>RESPOSTA INCORRETA</Text>
-            <Text style={{ fontSize: 20, textAlign: 'center', width: '90%', alignSelf: 'center' }}>Não se preocupe, todos nós cometemos erros. O importante é aprender com eles e continuar tentando. Você está no caminho certo!</Text>
+            <Text style={{ fontSize: 20, textAlign: 'center', width: '90%', alignSelf: 'center' }}>NÃO SE PREOCUPE, TODOS NÓS COMETEMOS ERROS. O IMPORTANTE É APRENDER COM ELES E CONTINUAR TENTANDO. VOCÊ ESTÁ NO CAMINHO CERTO!</Text>
 
             <TouchableOpacity
               onPress={() => setCurrentStep(1)} 
               style={[
                 { backgroundColor: '#BD2F0A', padding: 10, borderRadius: 15, position: 'absolute', bottom: 25, marginLeft: 25, marginRight: 25, width: '90%', alignSelf: 'center'  }
               ]}>
-              <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>Tentar novamente</Text>
+              <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>TENTAR NOVAMENTE</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.imageColumn}>
@@ -234,7 +349,7 @@ export default function QuestionPage () {
                   if (pendingQuestions[0].questions.length > 1) {
                     setCurrentStep(2);
                   } else {
-                    setCurrentStep(0);
+                    setCurrentStep(-1);
                   }
                   setLoading(false);
                 }, 250); 
@@ -245,7 +360,7 @@ export default function QuestionPage () {
                 {(loading) ?
                   <ActivityIndicator size="small" color="white" style={{ padding: 2 }} />
                   :
-                  <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>Continuar</Text>
+                  <Text style={{ color: 'white', fontSize: 20, fontWeight: 600, textAlign: 'center'}}>CONTINUAR</Text>
                 }
             </TouchableOpacity>
           </View>
